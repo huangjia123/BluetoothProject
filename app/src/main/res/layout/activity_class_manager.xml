@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:future="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/activity_background"
+    android:orientation="vertical"
+    tools:context=".BaseActivity">
+
+    <com.future.bluetoothnamesystem.view.FutureTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        future:activity_title="班级管理" />
+
+    <LinearLayout
+        style="@style/content_layout_background"
+        android:layout_height="0dp"
+        android:layout_below="@+id/title_bar"
+        android:layout_weight="1">
+
+        <TextView
+            style="@style/title_listView"
+            android:text="查看所有班级名单" />
+
+        <ListView
+            android:id="@+id/lv_classNames"
+            style="@style/content_listView"
+            android:background="@color/half_trans2">
+
+        </ListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:layout_alignParentBottom="true"
+        android:background="@color/half_trans"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/bottom_style"
+            android:drawableTop="@mipmap/docum"
+            android:onClick="add"
+            android:text="导入班级" />
+
+        <TextView
+            style="@style/bottom_style"
+            android:drawableTop="@mipmap/docum"
+            android:text="删除班级" />
+
+    </LinearLayout>
+
+</LinearLayout>

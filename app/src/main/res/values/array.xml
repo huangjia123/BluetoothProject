@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="course">
+        <item>选择课程</item>
+        <item>高数</item>
+        <item>大学英语</item>
+        <item>C语言</item>
+        <item>操作系统</item>
+        <item>计算机网络</item>
+        <item>思修</item>
+    </string-array>
+
+    <string-array name="classes">
+        <item>选择班级</item>
+        <item>物联131</item>
+        <item>教育121</item>
+        <item>计科121</item>
+        <item>计科132</item>
+        <item>信工132</item>
+        <item>计科134</item>
+        <item>计科133</item>
+    </string-array>
+</resources>
