@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/my_title"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/abc_action_bar_default_height_material"
+    android:background="@color/half_trans">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/Title_Name"
+        android:gravity="center_vertical"
+         />
+
+    <ImageButton
+        android:id="@+id/ib_back"
+        style="@style/Title_imageButton"
+        android:layout_alignParentLeft="true"
+        android:onClick="goBack"
+        android:background="@color/total_trans"
+        android:src="@mipmap/back" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/logo"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/ib_back"
+        android:layout_toEndOf="@+id/ib_back" />
+</RelativeLayout>

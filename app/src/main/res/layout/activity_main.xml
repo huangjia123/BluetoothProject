@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:future="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/activity_background"
+
+    tools:context="com.future.bluetoothnamesystem.activity.MainActivity">
+
+    <com.future.bluetoothnamesystem.view.FutureTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        future:activity_title="@string/app_name" />
+
+    <LinearLayout
+        style="@style/content_layout_background"
+        android:layout_below="@+id/title_bar">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="open"
+            android:text="点击" />
+    </LinearLayout>
+
+</RelativeLayout>
