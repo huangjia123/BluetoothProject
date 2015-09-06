@@ -14,6 +14,10 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:label="@string/title_activity_setting" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +25,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.OnLineActivity"
+            android:label="@string/title_activity_on_line" >
+        </activity>
+        <activity android:name=".activity.PasswordLock" >
+        </activity>
+        <activity android:name=".activity.SetPwdResActivity" >
+        </activity>
+        <activity
+            android:name=".activity.base.SetCourseActivity"
+            android:label="@string/title_activity_set_course" >
             android:name=".activity.ExportData"
             android:label="@string/title_activity_export_data" >
         </activity>

@@ -7,7 +7,11 @@
     <string name="title_activity_export_data">导出数据</string>
     <string name="title_activity_naming_result">NamingResult</string>
     <string name="title_activity_naming_system">NamingSystem</string>
-    <string name="activity_"></string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_line_grid_view">LineGridView</string>
+    <color name="back">#000000</color>
+    <string name="title_activity_on_line">OnLineActivity</string>
+    <string name="title_activity_set_course">SetCourseActivity</string>
     <string name="title_activity_class_manager">ClassManager</string>
     <string name="title_activity_classes_names">ClassesNamesActivity</string>
     <string name="title_activity_check_result">CheckResultActivity</string>

@@ -1,4 +1,10 @@
 package com.future.bluetoothnamesystem.activity;
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +21,12 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
     }
 
+
     public void open(View view){
-        Intent intent =new Intent(MainActivity.this,ExportData.class);
+        Intent intent =new Intent(MainActivity.this,BaseActivity.class);
         startActivity(intent);
     }
+
     public void open4(View view){
         Intent intent =new Intent(MainActivity.this,BaseActivity.class);
         startActivity(intent);
