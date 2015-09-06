@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="40dp"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/student_names"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="小二"
+        android:textSize="@dimen/listview_content_text_size2" />
+
+    <TextView
+        android:id="@+id/bluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="蓝牙Mac地址"
+        android:textSize="@dimen/listview_content_text_size2" />
+
+
+    <TextView
+        android:id="@+id/student_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/student_names"
+        android:text="20121554124"
+        android:textSize="@dimen/listview_content_text_size2" />
+
+    <TextView
+        android:id="@+id/student_MacAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bluetooth"
+        android:layout_below="@+id/bluetooth"
+        android:text="18.92.16.1"
+        android:textSize="@dimen/listview_content_text_size2" />
+
+</RelativeLayout>

@@ -1,11 +1,14 @@
 package com.future.bluetoothnamesystem.activity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import android.content.Intent;
+import android.os.Bundle;
+
 import android.view.View;
 
 import com.future.bluetoothnamesystem.R;
@@ -19,8 +22,25 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
     }
 
+
     public void open(View view){
         Intent intent =new Intent(MainActivity.this,BaseActivity.class);
         startActivity(intent);
     }
+
+    public void open1(View view){
+        Intent intent =new Intent(MainActivity.this,ClassManagerActivity.class);
+        startActivity(intent);
+    }
+
+    public void open2(View view){
+        Intent intent =new Intent(MainActivity.this,ClassesNamesActivity.class);
+        startActivity(intent);
+    }
+
+    public void open3(View view){
+        Intent intent =new Intent(MainActivity.this,CheckResultActivity.class);
+        startActivity(intent);
+    }
+    
 }

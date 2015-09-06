@@ -35,6 +35,20 @@
         <activity
             android:name=".activity.base.SetCourseActivity"
             android:label="@string/title_activity_set_course" >
+            android:name=".activity.ClassManagerActivity"
+            android:label="@string/title_activity_class_manager"
+            android:parentActivityName=".activity.base.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.future.bluetoothnamesystem.activity.base.BaseActivity" />
+        </activity>
+        <activity
+            android:name=".activity.ClassesNamesActivity"
+            android:label="@string/title_activity_classes_names" >
+        </activity>
+        <activity
+            android:name=".activity.CheckResultActivity"
+            android:label="@string/title_activity_check_result" >
         </activity>
     </application>
 

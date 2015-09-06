@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/student_names"
+            style="@style/check_result_content"
+            android:text="小二" />
+
+        <TextView
+            android:id="@+id/student_id"
+            style="@style/check_result_content"
+            android:text="20121554124" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/linearlayout_check_result">
+
+        <TextView
+            android:id="@+id/tv_arrival"
+            style="@style/check_result_content"
+            android:text="已到" />
+
+        <TextView
+            android:id="@+id/tv_arrival_times"
+            style="@style/check_result_content"
+            android:text="12" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/linearlayout_check_result">
+
+        <TextView
+            android:id="@+id/late"
+            style="@style/check_result_content"
+            android:text="迟到" />
+
+        <TextView
+            android:id="@+id/late_times"
+            style="@style/check_result_content"
+            android:text="8" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/linearlayout_check_result">
+
+        <TextView
+            android:id="@+id/tv_non_arrival"
+            style="@style/check_result_content"
+            android:text="请假" />
+
+        <TextView
+            android:id="@+id/tv_non_arrival_times"
+            style="@style/check_result_content"
+            android:text="10" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/linearlayout_check_result">
+
+        <TextView
+            android:id="@+id/breaks"
+            style="@style/check_result_content"
+            android:text="缺席" />
+
+        <TextView
+            android:id="@+id/breaks_times"
+            style="@style/check_result_content"
+            android:text="12" />
+    </LinearLayout>
+
+</LinearLayout>

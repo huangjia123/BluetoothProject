@@ -10,4 +10,6 @@
     <color name="total_trans">#00000000</color>
 
 
+    <!--半透明-->
+    <color name="half_trans2">#2000</color>
 </resources>
