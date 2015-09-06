@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:background="#11000000">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="2"
+    android:layout_gravity="center_vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="12sp"
+        android:text="Medium Text"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:id="@+id/id_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="12sp"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="Medium Text"
+        android:id="@+id/stu_id" />
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_gravity="center">
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/this_time"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/non_arrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableBottom="@android:drawable/btn_radio"
+                android:gravity="center"
+                android:text="缺席" />
+
+            <RadioButton
+                android:id="@+id/late"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableBottom="@android:drawable/btn_radio"
+                android:gravity="center"
+                android:text="迟到" />
+
+            <RadioButton
+                android:id="@+id/breaks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableBottom="@android:drawable/btn_radio"
+                android:gravity="center"
+                android:text="请假" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+</LinearLayout>

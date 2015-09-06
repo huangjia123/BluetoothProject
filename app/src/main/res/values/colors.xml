@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--黑色-->
+    <color name="black">#000</color>
+    <!--白色-->
+    <color name="white">#fff</color>
+    <!--半透明-->
+    <color name="half_trans">#77ffffff</color>
+    <!--全透明-->
+    <color name="total_trans">#00000000</color>
+
+
+</resources>

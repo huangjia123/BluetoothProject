@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:future="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@mipmap/activity_background"
+    android:orientation="vertical"
+    tools:context=".BaseActivity">
+
+    <com.future.bluetoothnamesystem.view.FutureTitleBar
+        android:id="@+id/title_bar"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+
+        future:activity_title="导出数据" />
+
+    <ImageView
+        android:id="@+id/iv_naming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+
+        android:background="@drawable/iv_border"
+        android:padding="3dp"
+        android:src="@mipmap/naming" />
+
+    <RelativeLayout
+        android:id="@+id/select"
+        style="@style/content_layout_background"
+        android:layout_height="0dp"
+        android:layout_below="@+id/iv_naming"
+        android:layout_marginTop="1dp"
+        android:layout_weight="8"
+        android:gravity="center|center_horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_choose_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="请选择班级" />
+
+        <Spinner
+            android:id="@+id/sp_choose_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.Spinner"
+            android:prompt="@string/app_name"
+            android:layout_alignBottom="@id/tv_choose_class"
+            android:layout_marginLeft="100dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_choose_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_below="@id/tv_choose_class"
+            android:layout_marginTop="20dp"
+            android:text="请选择课程" />
+
+        <Spinner
+            android:id="@+id/sp_choose_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_alignBottom="@id/tv_choose_course"
+            android:layout_alignLeft="@id/tv_choose_course"
+            android:layout_marginLeft="100dp"
+            android:entries="@array/spingarr"
+            />
+
+        <TextView
+            android:id="@+id/tv_choose_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_below="@id/tv_choose_course"
+            android:layout_marginTop="20dp"
+            android:text="请选择导出位置" />
+
+        <Spinner
+            android:id="@+id/sp_choose_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignBottom="@id/tv_choose_location"
+            android:layout_alignLeft="@id/tv_choose_location"
+            android:layout_marginLeft="100dp"
+            android:entries="@array/spingarr" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+
+        android:background="@color/half_trans"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@mipmap/click_ok"
+            android:text="确定" />
+    </LinearLayout>
+</LinearLayout>
