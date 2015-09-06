@@ -1,37 +1,33 @@
 package com.future.bluetoothnamesystem.bean;
 
 /**
- * Created by baiju on 2015/8/25.
- * 选择的课程实体
+ * Created by hehehe on 2015/8/27.
  */
 public class CourseInfo {
-    /**选择状态*/
-    private boolean isChecked;
-    /**课程名*/
-    private String itemName;
 
-    public CourseInfo() {
+    /**
+     * 课程id
+     */
+    private int courseId;
 
+    /**
+     * 课程名
+     */
+    private String courseName;
+
+    public int getCourseId() {
+        return courseId;
     }
 
-    public CourseInfo(boolean isChecked, String itemName) {
-        this.isChecked = isChecked;
-        this.itemName = itemName;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
-    public boolean isChecked() {
-        return isChecked;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setIsChecked(boolean isChecked) {
-        this.isChecked = isChecked;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

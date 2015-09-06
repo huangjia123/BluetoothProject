@@ -7,4 +7,9 @@
     <string name="title_activity_export_data">导出数据</string>
     <string name="title_activity_naming_result">NamingResult</string>
     <string name="title_activity_naming_system">NamingSystem</string>
+    <string name="activity_"></string>
+    <string name="title_activity_class_manager">ClassManager</string>
+    <string name="title_activity_classes_names">ClassesNamesActivity</string>
+    <string name="title_activity_check_result">CheckResultActivity</string>
+    <string name="choose_course">请选择课程</string>
 </resources>

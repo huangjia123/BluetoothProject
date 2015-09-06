@@ -23,12 +23,27 @@ public class MainActivity extends BaseActivity {
         Intent intent =new Intent(MainActivity.this,BaseActivity.class);
         startActivity(intent);
     }
-    public void open2(View view){
+    public void open5(View view){
         Intent intent =new Intent(MainActivity.this,NamingStart.class);
         startActivity(intent);
     }
-    public void open3(View view){
+    public void open6(View view){
         Intent intent =new Intent(MainActivity.this,NamingResult.class);
         startActivity(intent);
     }
+    public void open1(View view){
+        Intent intent =new Intent(MainActivity.this,ClassManagerActivity.class);
+        startActivity(intent);
+    }
+
+    public void open2(View view){
+        Intent intent =new Intent(MainActivity.this,ClassesNamesActivity.class);
+        startActivity(intent);
+    }
+
+    public void open3(View view){
+        Intent intent =new Intent(MainActivity.this,CheckResultActivity.class);
+        startActivity(intent);
+    }
+
 }

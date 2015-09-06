@@ -19,8 +19,6 @@ import com.future.bluetoothnamesystem.R;
  */
 public class FutureTitleBar extends RelativeLayout{
 
-
-
     private  static final String NAMESPACE="http://schemas.android.com/apk/res-auto";
 
     //private ImageButton ibBack;

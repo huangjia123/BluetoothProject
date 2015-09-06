@@ -34,4 +34,58 @@
         <item name="android:background">@drawable/content_background</item>
 
     </style>
+     
+
+    <!--listview 标题样式-->
+    <style name="title_listView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/listview_title_padding</item>
+        <item name="android:textSize">@dimen/listview_title_text_size</item>
+        <item name="android:textColor">#a000</item>
+        <item name="android:gravity">center</item>
+
+    </style>
+
+    <!--listview 内容样式-->
+    <style name="content_listView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:background">@color/total_trans</item>
+    </style>
+
+    <!--bottom 上图下字样式-->
+    <style name="bottom_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!--bottom 上图下字样式-->
+    <style name="check_result_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">#7fff</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!--bottom 查询结果内容显示样式-->
+    <style name="check_result_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/listview_content_text_size2</item>
+    </style>
+
+    <!--bottom 查询结果线性布局-->
+    <style name="linearlayout_check_result">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
 </resources>

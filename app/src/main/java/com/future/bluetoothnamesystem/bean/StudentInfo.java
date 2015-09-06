@@ -1,16 +1,46 @@
 package com.future.bluetoothnamesystem.bean;
 
+import java.math.BigInteger;
+
 /**
- * Created by baiju on 2015/8/26.
+ * Created by hehehe on 2015/8/27.
  */
 public class StudentInfo {
-    public StudentInfo() {
+
+    private String stuId;
+    private String stuName;
+    private String macAddress;
+    private String className;
+
+    public String getStuId() {
+        return stuId;
     }
 
-    private String name;
-    private String stuID;
-    private String className;
-    private String macAddress;
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
+    }
 
+    public String getStuName() {
+        return stuName;
+    }
 
+    public void setStuName(String stuName) {
+        this.stuName = stuName;
+    }
+
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
 }

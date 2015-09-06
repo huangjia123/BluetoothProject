@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:future="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/activity_background"
+    android:orientation="vertical"
+    tools:context=".BaseActivity">
+
+    <com.future.bluetoothnamesystem.view.FutureTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        future:activity_title="查看结果" />
+
+    <LinearLayout
+        style="@style/content_layout_background"
+        android:layout_below="@+id/title_bar">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <Spinner
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/spinner"
+                android:entries="@array/course"/>
+
+            <Spinner
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/spinner"
+                android:entries="@array/classes" />
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:background="#8fff"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="查看"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_result"
+            style="@style/content_listView"
+            android:background="@color/half_trans2">
+        </ListView>
+
+    </LinearLayout>
+
+</LinearLayout>
