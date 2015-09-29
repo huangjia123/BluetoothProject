@@ -10,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.future.bluetoothnamesystem.R;
+import com.future.bluetoothnamesystem.activity.base.BaseActivity;
 
-public class OnLineActivity extends AppCompatActivity {
+public class OnLineActivity extends BaseActivity {
 
     private GridView gvSet1;
     private String[] mItemsCallName = new String[] { "在线点名", "查看结果", "查看课程", "查看数据"};

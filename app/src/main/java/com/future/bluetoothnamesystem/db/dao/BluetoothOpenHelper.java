@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by baiju on 2015/8/27.
  */
+@Deprecated
 public class BluetoothOpenHelper extends SQLiteOpenHelper {
     public BluetoothOpenHelper(Context context) {
         super(context, "bluetooth.db", null, 1);

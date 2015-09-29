@@ -5,7 +5,11 @@ import android.test.ApplicationTestCase;
 import android.content.Context;
 import android.test.AndroidTestCase;
 
+import com.future.bluetoothnamesystem.bean.StudentInfo;
 import com.future.bluetoothnamesystem.db.dao.TestCourseInfoDao;
+import com.future.bluetoothnamesystem.db.dao.TestStudentInfoDao;
+
+import java.util.List;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -30,6 +34,25 @@ public class ApplicationTest extends AndroidTestCase {
             System.out.println(add);
         }
     }
+
+    public void testAddStuInfo(){
+
+        TestStudentInfoDao tsd=new TestStudentInfoDao(mContext);
+         StudentInfo  stu1=new StudentInfo("1001","王志成","100120","计科121");
+         StudentInfo  stu2=new StudentInfo("1002","刘志成","100110","计科122");
+         StudentInfo  stu3=new StudentInfo("1003","李志成","1001201","计科121");
+        tsd.add(stu1);
+        tsd.add(stu2);
+        tsd.add(stu3);
+
+    }
+
+    public void testFindClass(){
+        TestStudentInfoDao dao=new TestStudentInfoDao(mContext);
+        List list=dao.findClass();
+        System.out.println(list.size()+"-----------===============----------------");
+    }
+
 
     public void testDelete(){
         TestCourseInfoDao testCourseDao = new TestCourseInfoDao(mContext);

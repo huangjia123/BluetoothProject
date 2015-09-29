@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.view.LineGridView;
 
-public class SetCourseActivity extends AppCompatActivity {
+public class SetCourseActivity extends BaseActivity {
     private GridView lvaddCourse;
 
     private String[] mItems = new String[] { "大学物理", "高级数学", "大学英语", "物联网导论",

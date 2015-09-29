@@ -17,10 +17,10 @@ import java.util.Map;
  * Created by baiju on 2015/8/27.
  */
 public class BluetoothDao {
-    public BluetoothOpenHelper helper;
+    public DataBaseHelper helper;
 
     public BluetoothDao(Context context) {
-        helper = new BluetoothOpenHelper(context);
+        helper = new DataBaseHelper(context);
     }
 
     public boolean addNamingRecard(NamingRecard namingRecard) {

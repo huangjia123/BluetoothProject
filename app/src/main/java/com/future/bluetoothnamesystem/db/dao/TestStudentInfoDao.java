@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.future.bluetoothnamesystem.bean.StudentInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hehehe on 2015/8/28.
@@ -122,5 +125,21 @@ public class TestStudentInfoDao {
         }
 
         return studentInfos;
+    }
+    /**查询班级信息*/
+    public List<String> findClass() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        List<String> group = new ArrayList<String>();
+        Cursor cursor = db.query("student_information", new String[]{"class_name", "count(distinct class_name)"}, null, null, "class_name", null, null);
+        while (cursor.moveToNext()) {
+
+            String className=cursor.getString(0);
+
+            group.add(className);
+
+        }
+        cursor.close();
+        db.close();
+        return group;
     }
 }

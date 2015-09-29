@@ -44,6 +44,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String table2 = "CREATE TABLE student_information (stu_id BIGINT(15) PRIMARY KEY,stu_name VARCHAR( 5 )," +
                 "macAddress VARCHAR(30),  class_name VARCHAR(10));";
         db.execSQL(table2);
+
+        db.execSQL("CREATE TABLE naming_record (" +
+                " id           INTEGER( 15 )  PRIMARY KEY" +
+                " NOT NULL" +
+                " UNIQUE," +
+                " stu_id       VARCHAR( 15 )," +
+                " course_name  VARCHAR( 15 )," +
+                " class_name   VARCHAR( 15 )," +
+                " stu_name     VARCHAR( 15 )," +
+                " teacher_name VARCHAR( 15 )," +
+                " arrival      INT( 3 )," +
+                " non_arrival  INT( 3 )," +
+                " late         INT( 3 )," +
+                " break        INT( 3 )," +
+                " this_time    INT( 2 )" +
+                " );");
     }
 
     @Override

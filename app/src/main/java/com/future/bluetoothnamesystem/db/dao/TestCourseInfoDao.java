@@ -114,4 +114,21 @@ public class TestCourseInfoDao {
         db.close();
         return courseInfos;
     }
+
+    /**
+     * 查询所有课程号的课程名称
+     * @return
+     */
+    public List<String> findAllCourseNames(){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        ArrayList<String> courseNames = new ArrayList<String>();
+        Cursor cursor = db.query("course", new String[]{"course_id", "course_name"}, null, null, null, null, null);
+        while(cursor.moveToNext()){
+            //courseInfo.setCourseName(cursor.getString(1));
+            courseNames.add(cursor.getString(1));
+        }
+        cursor.close();
+        db.close();
+        return courseNames;
+    }
 }

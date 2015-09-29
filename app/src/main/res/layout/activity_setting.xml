@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:future="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/activity_background"
     android:orientation="vertical">
+
     <com.future.bluetoothnamesystem.view.FutureTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
         future:activity_title="设置" />
-<com.future.bluetoothnamesystem.view.LineGridView
+
+    <com.future.bluetoothnamesystem.view.LineGridView
         android:id="@+id/gv_setting"
-        android:padding="5dp"
-        android:layout_margin="15dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@color/half_trans"
+        android:layout_margin="15dp"
         android:layout_weight="1"
         android:numColumns="2"
-        android:stretchMode="columnWidth"/>
-        
-
+        android:padding="5dp"
+        android:stretchMode="columnWidth" />
 
 
 </LinearLayout>

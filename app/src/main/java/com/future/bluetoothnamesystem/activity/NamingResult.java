@@ -225,7 +225,6 @@ public class NamingResult extends BaseActivity {
     }
 
     static class ViewHolder {
-        Integer stuIds;
         int groupPosition;
         int childPosition;
         TextView stuId;

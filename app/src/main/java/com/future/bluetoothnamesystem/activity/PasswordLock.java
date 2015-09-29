@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.future.bluetoothnamesystem.R;
+import com.future.bluetoothnamesystem.activity.base.BaseActivity;
 import com.future.bluetoothnamesystem.view.NinePointLineView;
 
 /**
@@ -14,7 +15,7 @@ import com.future.bluetoothnamesystem.view.NinePointLineView;
  * 作者：佳佳
  * 时间：2015年8月25日 
  * */
-public class PasswordLock extends Activity {
+public class PasswordLock extends BaseActivity {
 	
 	private LinearLayout nine_con;//九宫格容器
 	
@@ -26,11 +27,9 @@ public class PasswordLock extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
-		super.onCreate(savedInstanceState);
-		
+
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);//设置标题不显示
-		
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_passwordlock);
 		
 		nv = new NinePointLineView(PasswordLock.this);

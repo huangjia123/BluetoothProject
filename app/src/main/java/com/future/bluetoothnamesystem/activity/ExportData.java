@@ -30,22 +30,22 @@ public class ExportData extends BaseActivity {
         Spinner classSP = (Spinner) findViewById(R.id.sp_choose_class);
 
         courseInfoList=new ArrayList<CourseInfo>() ;
-        courseInfoList.add(new CourseInfo(false,"计科121"));
-        courseInfoList.add(new CourseInfo(false,"计科122"));
-        courseInfoList.add(new CourseInfo(false,"计科123"));
-        courseInfoList.add(new CourseInfo(false, "计科125"));
+        /*courseInfoList.add(new CourseInfo(false, "计科121"));
+        courseInfoList.add(new CourseInfo(false, "计科122"));
+        courseInfoList.add(new CourseInfo(false, "计科123"));
+        courseInfoList.add(new CourseInfo(false, "计科125"));*/
         InnerAdapter innerAdapter = new InnerAdapter(ExportData.this,courseInfoList);
         classSP.setAdapter(innerAdapter);
 
         classSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(courseInfoList.get(position).isChecked()){
+                /*if (courseInfoList.get(position).isChecked()) {
                     courseInfoList.get(position).setIsChecked(false);
-                }else{
+                } else {
                     courseInfoList.get(position).setIsChecked(true);
 
-                }
+                }*/
             }
 
             @Override
@@ -86,9 +86,9 @@ public class ExportData extends BaseActivity {
             if(holder.cbClass==null){
                 System.out.println("================空=================");
             }
-            holder.cbClass.setChecked(lists.get(position).isChecked());
+            /*holder.cbClass.setChecked(lists.get(position).isChecked());
 
-            holder.cbClass.setText(lists.get(position).getItemName());
+            holder.cbClass.setText(lists.get(position).getItemName());*/
             System.out.println("================" + lists.get(position).toString());
 
             return convertView;

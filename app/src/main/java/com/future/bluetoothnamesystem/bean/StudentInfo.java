@@ -11,6 +11,15 @@ public class StudentInfo {
     private String stuName;
     private String macAddress;
     private String className;
+    public StudentInfo(){
+
+    }
+    public StudentInfo(String stuId, String stuName, String macAddress, String className) {
+        this.stuId = stuId;
+        this.stuName = stuName;
+        this.macAddress = macAddress;
+        this.className = className;
+    }
 
     public String getStuId() {
         return stuId;

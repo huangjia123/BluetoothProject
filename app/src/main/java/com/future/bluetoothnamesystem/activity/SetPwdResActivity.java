@@ -1,25 +1,25 @@
 package com.future.bluetoothnamesystem.activity;
-import android.app.Activity;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.TextView;
+
 import com.future.bluetoothnamesystem.R;
+import com.future.bluetoothnamesystem.activity.base.BaseActivity;
 
 /**
  * 作用：测试九宫格手势密码
  * 作者：佳佳
  * 时间：2015年8月25日 
  * */
-public class SetPwdResActivity extends Activity {
+public class SetPwdResActivity extends BaseActivity {
 	
 	private TextView showInfo;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_respasswordlock);
 		showInfo = (TextView)findViewById(R.id.res_info);
 		SharedPreferences shareDate = getSharedPreferences("GUE_PWD", 0);

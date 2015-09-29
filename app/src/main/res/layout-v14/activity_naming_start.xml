@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:future="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/activity_background"
+    android:orientation="vertical">
+
+    <com.future.bluetoothnamesystem.view.FutureTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        future:activity_title="在线点名" />
+
+    <ImageView
+    android:id="@+id/iv_background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/title_bar"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
+    android:adjustViewBounds="true"
+    android:background="@drawable/iv_border"
+    android:padding="3dp"
+    android:src="@mipmap/banner_setting" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        style="@style/content_layout_background"
+        android:layout_height="0dp"
+        android:layout_below="@+id/iv_background"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- <GridView
+             android:id="@+id/gv_setting_call"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:numColumns="2"
+             android:stretchMode="columnWidth"
+             />-->
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:columnCount="2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_class_choose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="选择班级"/>
+                    <Spinner
+                        android:id="@+id/sp_choose_class"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:prompt="@string/choose_class"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+
+                <GridView
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:id="@+id/gv_classes_choosed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:numColumns="5"/>
+
+            </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="选择班级"/>
+                <Spinner
+                    android:id="@+id/sp_choose_course"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:prompt="@string/choose_course"
+                    android:spinnerMode="dialog" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/button_material_light"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@mipmap/o" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="开始点名" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:background="@color/button_material_light"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/o" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="查看结果" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

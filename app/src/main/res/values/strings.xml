@@ -12,8 +12,9 @@
     <color name="back">#000000</color>
     <string name="title_activity_on_line">OnLineActivity</string>
     <string name="title_activity_set_course">SetCourseActivity</string>
-    <string name="title_activity_class_manager">ClassManager</string>
+    <string name="title_activity_class_manager">课程管理</string>
     <string name="title_activity_classes_names">ClassesNamesActivity</string>
     <string name="title_activity_check_result">CheckResultActivity</string>
     <string name="choose_course">请选择课程</string>
+    <string name="choose_class">请选择班级</string>
 </resources>
