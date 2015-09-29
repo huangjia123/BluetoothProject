@@ -1,9 +1,11 @@
 package com.future.bluetoothnamesystem.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.activity.base.BaseActivity;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ClassesNamesActivity extends BaseActivity {
+
 
     private String[] name = new String[]{"小二", "小二", "小二", "小二", "小二", "小二", "小二",
             "小二", "小二", "小二", "小二", "小二", "小二", "小二", "小二", "小二"};
@@ -34,13 +37,15 @@ public class ClassesNamesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classes_names);
 
+        Intent it = getIntent();
+        Toast.makeText(ClassesNamesActivity.this, it.getStringExtra("className"), Toast.LENGTH_SHORT).show();
         list = new ArrayList();
-           for (int i = 0; i <name.length ; i++) {
+        for (int i = 0; i < name.length; i++) {
             Map lists = new HashMap();
             lists.put("names", name[i]);
             lists.put("id", id[i]);
             lists.put("address", address[i]);
-               list.add(lists);
+            list.add(lists);
         }
 
         SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.students_names_list_view,

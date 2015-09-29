@@ -130,6 +130,7 @@
                     android:background="@color/button_material_light"
                     android:layout_margin="10dp"
                     android:padding="5dp"
+                    android:onClick="goStart"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -152,6 +153,7 @@
                     android:gravity="center"
                     android:layout_margin="10dp"
                     android:padding="5dp"
+                    android:onClick="goSearchResult"
                     android:background="@color/button_material_light"
                     android:orientation="horizontal">
 

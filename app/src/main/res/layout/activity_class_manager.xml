@@ -17,6 +17,7 @@
         style="@style/content_layout_background"
         android:layout_height="0dp"
         android:layout_below="@+id/title_bar"
+        android:orientation="vertical"
         android:layout_weight="1">
 
         <TextView
@@ -26,6 +27,8 @@
         <ListView
             android:id="@+id/lv_classNames"
             style="@style/content_listView"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:background="@color/half_trans2">
 
         </ListView>

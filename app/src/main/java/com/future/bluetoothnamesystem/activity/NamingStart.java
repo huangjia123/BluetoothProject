@@ -1,14 +1,13 @@
 package com.future.bluetoothnamesystem.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -21,9 +20,7 @@ import com.future.bluetoothnamesystem.db.dao.TestCourseInfoDao;
 import com.future.bluetoothnamesystem.db.dao.TestStudentInfoDao;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class NamingStart extends BaseActivity {
 
@@ -111,7 +108,6 @@ public class NamingStart extends BaseActivity {
                         mClassesChoosedList.remove(className);
                         mClassesChoosedAdapter.notifyDataSetChanged();
 
-
                     }
 
                 }
@@ -119,6 +115,7 @@ public class NamingStart extends BaseActivity {
 
             return view;
         }
+
 
 //        public View getView(final int position, View convertView, ViewGroup parent) {
 //           //View view = View.inflate(NamingStart.this, android.R.layout.simple_list_item_multiple_choice, null);
@@ -159,5 +156,13 @@ public class NamingStart extends BaseActivity {
 //
 //            return view;
 //        }
+    }
+    public void goStart(View view){
+        //startActivity(new Intent(NamingStart.this,));
+        Toast.makeText(NamingStart.this,"佳佳的功能",Toast.LENGTH_SHORT).show();
+    }
+
+    public void goSearchResult(View view){
+        startActivity(new Intent(NamingStart.this,NamingResult.class));
     }
 }
