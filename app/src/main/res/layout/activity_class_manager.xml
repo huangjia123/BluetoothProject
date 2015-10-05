@@ -52,6 +52,7 @@
         <TextView
             style="@style/bottom_style"
             android:drawableTop="@mipmap/docum"
+            android:onClick="delete"
             android:text="删除班级" />
 
     </LinearLayout>
