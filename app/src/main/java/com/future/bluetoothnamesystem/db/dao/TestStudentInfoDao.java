@@ -127,7 +127,10 @@ public class TestStudentInfoDao {
 
         return studentInfos;
     }
-    /**查询班级信息*/
+    /**
+     * 查询班级信息
+     * 包括班级名，班级名，班级学生数量
+     */
     public List<String> findClass() {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<String> group = new ArrayList<String>();
@@ -162,6 +165,34 @@ public class TestStudentInfoDao {
         db.close();
         return group;
     }
+
+    /**
+     * 查询课程查找班级名
+     * 返回值为存放班级名的list集合
+     */
+    public List<String> findClassByCoursename(String courseName) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        /**
+         * distinct class_name去除查询到的重复项
+         * select distinct class_name  from naming_record;
+         */
+        Cursor cursor =
+                db.query("naming_record", new String[]{"distinct class_name"}, "course_name = ? ", new String[]{courseName}, null, null, null);
+        List<String> group = new ArrayList<String>();
+
+
+        while (cursor.moveToNext()) {
+
+            String className = cursor.getString(0);
+
+            group.add(className);
+
+        }
+        cursor.close();
+        db.close();
+        return group;
+    }
+
 //王少峰******************************************************
     /**删除班级信息*/
     public void deleteClass(){

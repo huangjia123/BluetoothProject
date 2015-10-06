@@ -50,7 +50,7 @@ public class BluetoothDao {
 
         List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
         Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
-                "arrival", "non_arrival", "late", "break", "this_time", "class_name", "naming_record"}, null, null, null, null, null);
+                "arrival", "non_arrival", "late", "break", "this_time", "class_name"}, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
             NamingRecard namingRecard = new NamingRecard();
@@ -92,7 +92,7 @@ public class BluetoothDao {
 
 
     /**
-     * 根据训中的课程 ，以及班级，，查找学生信息
+     * 根据选中的课程 ，以及班级，，查找学生信息
      *
      * @param className  班级名
      * @param courseName 课程名
@@ -117,6 +117,13 @@ public class BluetoothDao {
         return namingResult;
     }
 
+    /**
+     * 查询没有来的学生点名记录
+     *
+     * @param group
+     * @param courseName
+     * @return
+     */
     public List<Map<String, Object>> findNoComingResult(String group, String courseName) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, Object>> namingResult = new ArrayList<Map<String, Object>>();
@@ -132,32 +139,17 @@ public class BluetoothDao {
             map.put("stu_id", cursor.getString(1).toString());
             map.put("stu_name", cursor.getString(3));
             map.put("this_time", cursor.getString(9));
-//            switch (cursor.getString(9)) {
-//                case "0":
-//                    map.put("late", true);
-//                    map.put("non_arrival", false);
-//                    map.put("break", false);
-//                    break;
-//                case "1":
-//                    map.put("later", false);
-//                    map.put("non_arrival", true);
-//                    map.put("break", false);
-//                    break;
-//                case "2":
-//                    map.put("later", false);
-//                    map.put("non_arrival", false);
-//                    map.put("break", true);
-//                    break;
-//                default:
-//                    break;
-//
-//            }
+
             namingResult.add(map);
         }
 
         return namingResult;
     }
 
+    /**
+     * 根据id，课程修改点名记录中的出勤状态
+     * 如果返回值为false，修改失败，否者，修改成功
+     * */
     public boolean update(String stuId,String courseName,String choice) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -165,7 +157,7 @@ public class BluetoothDao {
 
         contentValues.put("this_time", choice);
 
-        int i = db.update("naming_record", contentValues, "stu_id=? and course_name=?", new String[]{stuId,courseName});
+        int i = db.update("naming_record", contentValues, "stu_id=? and course_name=?", new String[]{stuId, courseName});
         if (i > 0) {
             return true;
         } else {
@@ -173,6 +165,7 @@ public class BluetoothDao {
         }
 
     }
+
 
     public List<Map<String, NamingRecard>> findNamingResult(String Group) {
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -203,4 +196,102 @@ public class BluetoothDao {
 
         return namingResult;
     }
+
+    public List<NamingRecard> findByCourseAndClass(String selectClass, String selectCourse) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
+        Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
+                "arrival", "non_arrival", "late", "break", "this_time", "class_name"}, "course_name=? and class_name=?", new String[]{selectCourse, selectClass}, null, null, null);
+
+        while (cursor.moveToNext()) {
+            NamingRecard namingRecard = new NamingRecard();
+            namingRecard.setRec_id(cursor.getInt(0));
+            namingRecard.setStu_id(cursor.getLong(1));
+            namingRecard.setCourse(cursor.getString(2));
+            namingRecard.setName(cursor.getString(3));
+            namingRecard.setTeacherName(cursor.getString(4));
+            namingRecard.setArrival(cursor.getString(5));
+            namingRecard.setNon_arrival(cursor.getString(6));
+            namingRecard.setLate(cursor.getString(7));
+            namingRecard.setBreaks(cursor.getString(8));
+            namingRecard.setThisTime(cursor.getString(9));
+            namingRecard.setClassName(cursor.getString(10));
+            namingRecardList.add(namingRecard);
+        }
+
+        cursor.close();
+        db.close();
+        return namingRecardList;
+    }
+
+    public List<NamingRecard> findByClasses(String[] mlist) {
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
+        Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
+                "arrival", "non_arrival", "late", "break", "this_time", "class_name"}, "class_name in (?)", mlist, null, null, null);
+
+        while (cursor.moveToNext()) {
+            NamingRecard namingRecard = new NamingRecard();
+            namingRecard.setRec_id(cursor.getInt(0));
+            namingRecard.setStu_id(cursor.getLong(1));
+            namingRecard.setCourse(cursor.getString(2));
+            namingRecard.setName(cursor.getString(3));
+            namingRecard.setTeacherName(cursor.getString(4));
+            namingRecard.setArrival(cursor.getString(5));
+            namingRecard.setNon_arrival(cursor.getString(6));
+            namingRecard.setLate(cursor.getString(7));
+            namingRecard.setBreaks(cursor.getString(8));
+            namingRecard.setThisTime(cursor.getString(9));
+            namingRecard.setClassName(cursor.getString(10));
+            namingRecardList.add(namingRecard);
+        }
+
+        cursor.close();
+        db.close();
+        return namingRecardList;
+    }
+
+    /**
+     * 根据传入的班级集合List查询需要的数据
+     * select args where args1 in list
+     */
+    public List<NamingRecard> findByClasses2(List<String> mlist) {
+        StringBuilder sb = new StringBuilder();
+        for (String str : mlist) {
+            sb.append(",'" + str + "'");
+
+        }
+        sb.deleteCharAt(0);
+        SQLiteDatabase db = helper.getReadableDatabase();
+        List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
+
+        Cursor cursor = db.rawQuery("select id,stu_id,course_name,stu_name,teacher_name,arrival,non_arrival,late,break,this_time,class_name" +
+                " from naming_record where class_name in (" + sb.toString() + ")", null);
+
+        while (cursor.moveToNext()) {
+            NamingRecard namingRecard = new NamingRecard();
+            namingRecard.setRec_id(cursor.getInt(0));
+            namingRecard.setStu_id(cursor.getLong(1));
+            namingRecard.setCourse(cursor.getString(2));
+            namingRecard.setName(cursor.getString(3));
+            namingRecard.setTeacherName(cursor.getString(4));
+            namingRecard.setArrival(cursor.getString(5));
+            namingRecard.setNon_arrival(cursor.getString(6));
+            namingRecard.setLate(cursor.getString(7));
+            namingRecard.setBreaks(cursor.getString(8));
+            namingRecard.setThisTime(cursor.getString(9));
+            namingRecard.setClassName(cursor.getString(10));
+            namingRecardList.add(namingRecard);
+        }
+
+        cursor.close();
+        db.close();
+        System.out.println(namingRecardList.size() + "长度");
+        return namingRecardList;
+    }
+
+
 }
