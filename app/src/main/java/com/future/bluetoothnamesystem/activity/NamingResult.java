@@ -36,12 +36,8 @@ public class NamingResult extends BaseActivity {
         setContentView(R.layout.activity_naming_result);
         resultView = (ExpandableListView) findViewById(R.id.result_naming_listview);
         initData();
-
         resultView.setAdapter(mNoComingAdapter);
-
-
     }
-
     public void initData() {
         courseName = "英语";
         BluetoothDao dao = new BluetoothDao(this);
@@ -143,14 +139,11 @@ public class NamingResult extends BaseActivity {
             tvNumber.setText(mStuCount);
             return convertView;
         }
-
-
         @Override
         public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             ViewHolder holder;
 
             childItemMap = (Map<String, Object>) getChild(groupPosition, childPosition);
-
             if (convertView == null) {
                 convertView = View.inflate(context, R.layout.item_result_nocoming_result, null);
                 holder = new ViewHolder();
@@ -158,13 +151,12 @@ public class NamingResult extends BaseActivity {
                 holder.stuName = (TextView) convertView.findViewById(R.id.id_name);
                 holder.rbBreaks = (RadioButton) convertView.findViewById(R.id.breaks);
                 holder.rbNon_arrival = (RadioButton) convertView.findViewById(R.id.non_arrival);
+                holder.rbarrival = (RadioButton) convertView.findViewById(R.id.arrival);
                 holder.rbLate = (RadioButton) convertView.findViewById(R.id.late);
                 holder.rgThisTime = (RadioGroup) convertView.findViewById(R.id.this_time);
-
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
-
             }
             holder.groupPosition=groupPosition;
             holder.childPosition=childPosition;
@@ -174,7 +166,6 @@ public class NamingResult extends BaseActivity {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     map.put(childPosition, checkedId);
-
                     System.out.println("我把第" + childPosition + "个Map的值设为了CheckID=" + checkedId +
                             "map的大小为" + map.size());
                     Set<Map.Entry<Integer, Integer>> test = map.entrySet();
@@ -186,10 +177,8 @@ public class NamingResult extends BaseActivity {
 
                 }
             });
-
             holder.stuId.setText(childItemMap.get("stu_id") + "");
             holder.stuName.setText(childItemMap.get("stu_name") + "");
-
             Integer radioCheck = null;
             Map<Integer, Integer> maps = mTempSelectMap.get(holder.groupPosition);
             if (maps != null) {
@@ -204,12 +193,19 @@ public class NamingResult extends BaseActivity {
                 switch (Integer.parseInt(childItemMap.get("this_time").toString())) {
                     case 0:
                         holder.rbNon_arrival.setChecked(true);
+
                         break;
                     case 1:
-                        holder.rbBreaks.setChecked(true);
+
+                        holder.rbarrival.setChecked(true);
                         break;
                     case 2:
-                        holder.rbNon_arrival.setChecked(true);
+                        holder.rbLate.setChecked(true);
+
+                        break;
+                    case 3:
+                        holder.rbBreaks.setChecked(true);
+
                         break;
                 }
             }
@@ -232,5 +228,6 @@ public class NamingResult extends BaseActivity {
         RadioButton rbBreaks;
         RadioButton rbLate;
         RadioButton rbNon_arrival;
+        RadioButton rbarrival;
     }
 }

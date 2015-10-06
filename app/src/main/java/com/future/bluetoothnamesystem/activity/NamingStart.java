@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.activity.base.BaseActivity;
 import com.future.bluetoothnamesystem.adapter.MyAdapter;
+import com.future.bluetoothnamesystem.db.dao.BluetoothDao;
 import com.future.bluetoothnamesystem.db.dao.TestCourseInfoDao;
 import com.future.bluetoothnamesystem.db.dao.TestStudentInfoDao;
 
@@ -42,6 +43,7 @@ public class NamingStart extends BaseActivity {
     private LinearLayout llClassChoose;
     private BlutetoothReceiver blutetoothReceiver;
     private List<String> list = new ArrayList<String>();
+    String selectCourse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,15 +84,14 @@ public class NamingStart extends BaseActivity {
     public void initView() {
         ll = (LinearLayout) findViewById(R.id.linearLayout);
         llClassChoose = (LinearLayout) findViewById(R.id.ll_class_choose);
-
-
         gv = (GridView) findViewById(R.id.gv_classes_choosed);
         spChooseClass = (Spinner) findViewById(R.id.sp_choose_class);
         spChooseCourse= (Spinner) findViewById(R.id.sp_choose_course);
+
         spChooseClass.setAdapter(adapter);
         spChooseCourse.setAdapter(courseAdapter);
         gv.setAdapter(mClassesChoosedAdapter);
-
+        selectCourse=spChooseCourse.getSelectedItem().toString();
 
     }
 
@@ -145,24 +146,31 @@ public class NamingStart extends BaseActivity {
             return view;
         }
     }
+
+    //开始点名
     public void goStart(View view){
-       // Toast.makeText(NamingStart.this,"佳佳的功能",Toast.LENGTH_SHORT).show();
-        //如果蓝牙开启
-        if(adapter1.isEnabled()){
-            setProgressBarIndeterminateVisibility(true);
-            Toast.makeText(NamingStart.this,"正在扫描....",Toast.LENGTH_LONG).show();
-           // setTitle("正在扫描....");
-            // 如果正在搜索，就先取消搜索
-            if (adapter1.isDiscovering()) {
-                adapter1.cancelDiscovery();
-            }
-            // 开始搜索蓝牙设备,搜索到的蓝牙设备通过广播返回
-            adapter1.startDiscovery();
-        }
+      if(selectCourse!=null){
+          // Toast.makeText(NamingStart.this,"佳佳的功能",Toast.LENGTH_SHORT).show();
+          //如果蓝牙开启
+          if(adapter1.isEnabled()){
+              setProgressBarIndeterminateVisibility(true);
+              Toast.makeText(NamingStart.this,"正在扫描....",Toast.LENGTH_LONG).show();
+              // setTitle("正在扫描....");
+              // 如果正在搜索，就先取消搜索
+              if (adapter1.isDiscovering()) {
+                  adapter1.cancelDiscovery();
+              }
+              // 开始搜索蓝牙设备,搜索到的蓝牙设备通过广播返回
+              adapter1.startDiscovery();
+          }
+      }else{
+          Toast.makeText(NamingStart.this,"请选择课程",Toast.LENGTH_LONG).show();
+      }
     }
     public void goSearchResult(View view){
         startActivity(new Intent(NamingStart.this,NamingResult.class));
     }
+    //创建广播接收者
     class BlutetoothReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -181,11 +189,21 @@ public class NamingStart extends BaseActivity {
                     .equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 setProgressBarIndeterminateVisibility(false);
                 //setTitle("搜索蓝牙设备");
-                Toast.makeText(NamingStart.this,"搜索蓝牙设备"+list.size(),Toast.LENGTH_LONG).show();
+                Toast.makeText(NamingStart.this,"搜索蓝牙设备"+list.size()+selectCourse,Toast.LENGTH_LONG).show();
+                if(list.size()!=0&&selectCourse!=null){
+                    BluetoothDao bluetoothDao=new BluetoothDao(NamingStart.this);
+                    bluetoothDao.updateThisTime(selectCourse,list);
+                }
 //                for(int i=0;i<list.size();i++){
 //				  System.out.println("*******"+list.get(0)); }
 
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(blutetoothReceiver);
+        super.onDestroy();
     }
 }

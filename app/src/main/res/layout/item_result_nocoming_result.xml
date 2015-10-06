@@ -53,6 +53,15 @@
                 android:drawableBottom="@android:drawable/btn_radio"
                 android:gravity="center"
                 android:text="缺席" />
+            <RadioButton
+                android:id="@+id/arrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableBottom="@android:drawable/btn_radio"
+                android:gravity="center"
+                android:text="到" />
 
             <RadioButton
                 android:id="@+id/late"

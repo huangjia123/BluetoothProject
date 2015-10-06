@@ -1,26 +1,18 @@
 package com.future.bluetoothnamesystem.activity;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
-
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.activity.base.BaseActivity;
-import com.future.bluetoothnamesystem.bean.ClassInfo;
 import com.future.bluetoothnamesystem.db.dao.DataBaseHelper;
 import com.future.bluetoothnamesystem.db.dao.TestStudentInfoDao;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ClassManagerActivity extends BaseActivity {
     DataBaseHelper helper;
@@ -81,7 +73,7 @@ public class ClassManagerActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Toast.makeText(ClassManagerActivity.this,"确定",Toast .LENGTH_SHORT).show();
+                        Toast.makeText(ClassManagerActivity.this, "确定", Toast.LENGTH_SHORT).show();
 
                     }
                 });

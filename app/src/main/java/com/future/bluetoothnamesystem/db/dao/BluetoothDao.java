@@ -165,7 +165,7 @@ public class BluetoothDao {
 
         contentValues.put("this_time", choice);
 
-        int i = db.update("naming_record", contentValues, "stu_id=? and course_name=?", new String[]{stuId,courseName});
+        int i = db.update("naming_record", contentValues, "stu_id=? and course_name=?", new String[]{stuId, courseName});
         if (i > 0) {
             return true;
         } else {
@@ -203,4 +203,13 @@ public class BluetoothDao {
 
         return namingResult;
     }
+    public void updateThisTime(String course_name,List<String> list){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        for (int i = 0; i < list.size(); i++) {
+            db.rawQuery(
+                    "update naming_record set this_time='1' where stu_name in(select stu_name from student_information where macAddress='"+list.get(i)+"')and course_name='"+course_name+"'", null);
+
+        }
+    }
+
 }
