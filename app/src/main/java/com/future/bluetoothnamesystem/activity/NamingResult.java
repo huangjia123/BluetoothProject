@@ -10,7 +10,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
-
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.activity.base.BaseActivity;
 import com.future.bluetoothnamesystem.bean.StudentInfo;

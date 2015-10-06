@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.future.bluetoothnamesystem.R;
@@ -30,12 +31,10 @@ public class ClassManagerActivity extends BaseActivity {
     private List<String> stuNumbers;
     private ListView list;
     private ArrayAdapter<String> adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_manager);
-
         iniData();
 
         initView();
@@ -46,6 +45,8 @@ public class ClassManagerActivity extends BaseActivity {
         classNames = tsiDao.findClass();
         adapter = new ArrayAdapter<String>(this, R.layout.classes_names_list_view,
                 R.id.etvnames_item, classNames);
+
+
     }
 
     public void initView(){

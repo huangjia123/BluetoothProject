@@ -36,7 +36,6 @@ public class ApplicationTest extends AndroidTestCase {
     }
 
     public void testAddStuInfo(){
-
         TestStudentInfoDao tsd=new TestStudentInfoDao(mContext);
          StudentInfo  stu1=new StudentInfo("1001","王志成","100120","计科121");
          StudentInfo  stu2=new StudentInfo("1002","刘志成","100110","计科122");
@@ -44,7 +43,6 @@ public class ApplicationTest extends AndroidTestCase {
         tsd.add(stu1);
         tsd.add(stu2);
         tsd.add(stu3);
-
     }
 
     public void testFindClass(){

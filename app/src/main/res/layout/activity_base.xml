@@ -15,7 +15,6 @@
     <LinearLayout
         style="@style/content_layout_background"
         android:layout_below="@+id/title_bar">
-
     </LinearLayout>
 
 </RelativeLayout>

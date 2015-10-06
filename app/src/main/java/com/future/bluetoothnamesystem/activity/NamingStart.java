@@ -1,7 +1,11 @@
 package com.future.bluetoothnamesystem.activity;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +24,11 @@ import com.future.bluetoothnamesystem.db.dao.TestCourseInfoDao;
 import com.future.bluetoothnamesystem.db.dao.TestStudentInfoDao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class NamingStart extends BaseActivity {
-
-
     Spinner spChooseClass,spChooseCourse;
     private String[] mItemsCallName = new String[]{"选择班级", "选择课程", "开始点名", "查看结果"};
     private List mClassesChoosedList = new ArrayList();
@@ -32,14 +36,45 @@ public class NamingStart extends BaseActivity {
     private GridView gv;
     private List<Boolean> mSelectedList;
     private MySelectAdapter adapter;
+    private BluetoothAdapter adapter1;
     private ArrayAdapter mClassesChoosedAdapter,courseAdapter;
     private LinearLayout ll;
     private LinearLayout llClassChoose;
-
+    private BlutetoothReceiver blutetoothReceiver;
+    private List<String> list = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naming_start);
+        // 获得BluetoothAdapter对象，该API是android 2.0开始支持的
+        adapter1 = BluetoothAdapter.getDefaultAdapter();
+
+        // adapter不等于null，说明本机有蓝牙设备
+        if (adapter1 != null) {
+            Toast.makeText(NamingStart.this, "本机有蓝牙设备！", Toast.LENGTH_LONG).show();
+            // System.out.println("本机有蓝牙设备！");
+            // 如果蓝牙设备未开启
+            if (!adapter1.isEnabled()) {
+                Intent intent = new Intent(
+                        BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                // 请求开启蓝牙设备
+                startActivity(intent);
+            }
+        } else {
+            Toast.makeText(NamingStart.this, "本机没有蓝牙设备！", Toast.LENGTH_LONG).show();
+        }
+
+        // 创建一个IntentFilter对象将其action指定为BluetoothDevice.ACTION_FOUND；
+        IntentFilter intentFilter = new IntentFilter(
+                BluetoothDevice.ACTION_FOUND);
+        blutetoothReceiver = new BlutetoothReceiver();
+        // 注册广播接收器
+        registerReceiver(blutetoothReceiver, intentFilter);
+        // 注册搜索完时的receiver
+        intentFilter = new IntentFilter(
+                BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        registerReceiver(blutetoothReceiver, intentFilter);
+
         initData();
         initView();
     }
@@ -52,7 +87,6 @@ public class NamingStart extends BaseActivity {
         gv = (GridView) findViewById(R.id.gv_classes_choosed);
         spChooseClass = (Spinner) findViewById(R.id.sp_choose_class);
         spChooseCourse= (Spinner) findViewById(R.id.sp_choose_course);
-
         spChooseClass.setAdapter(adapter);
         spChooseCourse.setAdapter(courseAdapter);
         gv.setAdapter(mClassesChoosedAdapter);
@@ -74,8 +108,6 @@ public class NamingStart extends BaseActivity {
     }
 
     class MySelectAdapter extends MyAdapter<String> {
-
-
         public MySelectAdapter(Context ctx, List<String> list) {
             super(ctx, list);
             mSelectedList = new ArrayList<Boolean>();
@@ -91,8 +123,6 @@ public class NamingStart extends BaseActivity {
             final String className = mClassesList.get(position).toString();
             checkBox.setText(className);
             checkBox.setChecked(mSelectedList.get(position));
-
-
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -101,7 +131,6 @@ public class NamingStart extends BaseActivity {
                         if (!mClassesChoosedList.contains(className)) {
                             mClassesChoosedList.add(className);
                             mClassesChoosedAdapter.notifyDataSetChanged();
-
                         }
                     } else {
                         mSelectedList.set(position, false);
@@ -115,54 +144,48 @@ public class NamingStart extends BaseActivity {
 
             return view;
         }
-
-
-//        public View getView(final int position, View convertView, ViewGroup parent) {
-//           //View view = View.inflate(NamingStart.this, android.R.layout.simple_list_item_multiple_choice, null);
-//            View view = View.inflate(NamingStart.this, R.layout.class_item_selecteded, null);
-//            //final CheckedTextView checkBox = (CheckedTextView) view.findViewById(android.R.id.text1);
-//            final CheckedTextView checkBox = (CheckedTextView) view.findViewById(R.id.ctv_checkedTextView);
-//            final String className = mClassesList.get(position).toString();
-//            checkBox.setText(className);
-//            checkBox.setChecked(mSelectedList.get(position));
-//
-//
-//            checkBox.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (checkBox.isChecked()) {
-//                        mSelectedList.set(position, false);
-//                        if (mClassesChoosedList.contains(className)) {
-//                            mClassesChoosedList.remove(className);
-//                            mClassesChoosedAdapter.notifyDataSetChanged();
-//                        }
-//                        checkBox.setChecked(false);
-//
-//
-//                    } else {
-//
-//
-//                        mSelectedList.set(position, true);
-//                        if (!mClassesChoosedList.contains(className)) {
-//                            mClassesChoosedList.add(className);
-//                            mClassesChoosedAdapter.notifyDataSetChanged();
-//
-//                        }
-//                        checkBox.setChecked(true);
-//                    }
-//                }
-//
-//            });
-//
-//            return view;
-//        }
     }
     public void goStart(View view){
-        //startActivity(new Intent(NamingStart.this,));
-        Toast.makeText(NamingStart.this,"佳佳的功能",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(NamingStart.this,"佳佳的功能",Toast.LENGTH_SHORT).show();
+        //如果蓝牙开启
+        if(adapter1.isEnabled()){
+            setProgressBarIndeterminateVisibility(true);
+            Toast.makeText(NamingStart.this,"正在扫描....",Toast.LENGTH_LONG).show();
+           // setTitle("正在扫描....");
+            // 如果正在搜索，就先取消搜索
+            if (adapter1.isDiscovering()) {
+                adapter1.cancelDiscovery();
+            }
+            // 开始搜索蓝牙设备,搜索到的蓝牙设备通过广播返回
+            adapter1.startDiscovery();
+        }
     }
-
     public void goSearchResult(View view){
         startActivity(new Intent(NamingStart.this,NamingResult.class));
+    }
+    class BlutetoothReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            // 获得已经搜索到的蓝牙设备
+            if (action.equals(BluetoothDevice.ACTION_FOUND)) {
+                BluetoothDevice device = intent
+                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // 搜索到的不是已经绑定的蓝牙设备
+                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                    // 把扫描的mac地址发到list中
+                    list.add(device.getAddress());
+                }
+                // 搜索完成
+            } else if (action
+                    .equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+                setProgressBarIndeterminateVisibility(false);
+                //setTitle("搜索蓝牙设备");
+                Toast.makeText(NamingStart.this,"搜索蓝牙设备"+list.size(),Toast.LENGTH_LONG).show();
+//                for(int i=0;i<list.size();i++){
+//				  System.out.println("*******"+list.get(0)); }
+
+            }
+        }
     }
 }
