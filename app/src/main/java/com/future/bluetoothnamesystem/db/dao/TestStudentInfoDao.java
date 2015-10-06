@@ -162,4 +162,14 @@ public class TestStudentInfoDao {
         db.close();
         return group;
     }
+//王少峰******************************************************
+    /**删除班级信息*/
+    public void deleteClass(){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        //删除SQL语句
+        String sql = "delete from stu_table where _id  = 6";
+        //执行SQL语句
+        db.execSQL(sql);
+    }
+//王少峰******************************************************
 }
