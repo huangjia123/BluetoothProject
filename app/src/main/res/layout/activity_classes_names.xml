@@ -21,8 +21,8 @@
         android:layout_weight="1">
 
         <TextView
-            style="@style/title_listView"
-            android:text="计科141" />
+            android:id="@+id/classname"
+            style="@style/title_listView" />
 
         <ListView
             android:id="@+id/lv_studentNames"
