@@ -97,4 +97,35 @@ public class ClassManagerActivity extends BaseActivity {
     public void add(View view) {
         Toast.makeText(ClassManagerActivity.this, "可以用", Toast.LENGTH_SHORT).show();
     }
+    public void delete(View view){
+
+        ArrayList<String> cn =(ArrayList<String>)classNames;
+        String [] names=new String[cn.size()];
+        for (int i=0;i<cn.size();i++){
+            names[i]=cn.get(i);
+        }
+        Toast.makeText(ClassManagerActivity.this,names[0]+"",Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder=new AlertDialog.Builder(ClassManagerActivity.this);
+        builder.setTitle("请选择您想要删除的班级：");
+        builder.setSingleChoiceItems(names, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.create().show();
+    }
+//王少峰*********************************************************
+
 }
