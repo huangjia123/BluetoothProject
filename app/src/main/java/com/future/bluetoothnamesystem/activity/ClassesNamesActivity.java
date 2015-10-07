@@ -2,9 +2,11 @@ package com.future.bluetoothnamesystem.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.future.bluetoothnamesystem.R;
@@ -30,15 +32,18 @@ public class ClassesNamesActivity extends BaseActivity {
             "18.96.126.1", "18.96.126.1", "18.96.126.1", "18.96.126.1", "18.96.126.1",
             "18.96.126.1", "18.96.126.1", "18.96.126.1", "18.96.126.1", "18.96.126.1",
             "18.96.126.1", "18.96.126.1", "18.96.126.1"};
+    private TextView className;
     private List list;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classes_names);
-
-        Intent it = getIntent();
-        Toast.makeText(ClassesNamesActivity.this, it.getStringExtra("className"), Toast.LENGTH_SHORT).show();
+        className = (TextView) findViewById(R.id.classname);
+        intent = getIntent();
+        className.setText(intent.getStringExtra("className"));
+        Toast.makeText(ClassesNamesActivity.this, intent.getStringExtra("className"), Toast.LENGTH_SHORT).show();
         list = new ArrayList();
         for (int i = 0; i < name.length; i++) {
             Map lists = new HashMap();
@@ -55,4 +60,17 @@ public class ClassesNamesActivity extends BaseActivity {
         listview.setAdapter(adapter);
 
     }
+
+    public void add(View view) {
+        Toast.makeText(ClassesNamesActivity.this, "add", Toast.LENGTH_SHORT).show();
+    }
+
+    public void update(View view) {
+        Toast.makeText(ClassesNamesActivity.this, "update", Toast.LENGTH_SHORT).show();
+    }
+
+    public void delete(View view) {
+        Toast.makeText(ClassesNamesActivity.this, "delete", Toast.LENGTH_SHORT).show();
+    }
+
 }
