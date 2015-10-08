@@ -1,6 +1,7 @@
 package com.future.bluetoothnamesystem.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,12 +39,21 @@ public class NamingResult extends BaseActivity {
         initData();
         resultView.setAdapter(mNoComingAdapter);
     }
+
+    //用于显示点名结果的列表
     public void initData() {
-        courseName = "英语";
+       // courseName = "英语";
         BluetoothDao dao = new BluetoothDao(this);
         List<List<Map<String, String>>> mList = new ArrayList<List<Map<String, String>>>();
         List<List<Map<String, Object>>> mNoComingList = new ArrayList<List<Map<String, Object>>>();
-        List<Map<String, String>> mClassGroup = dao.findClass();
+        //选中的班级
+        /**************************************************************/
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        ArrayList<String> selectClassName=bundle.getStringArrayList("classname");
+        courseName=bundle.getString("course");
+        /**************************************************************/
+        List<Map<String, String>> mClassGroup = dao.findClass(selectClassName);
         for (Map<String, String> map : mClassGroup) {
             String groupName = map.get("group");
             List<Map<String, String>> mStuItem = dao.findItem(groupName, courseName);
@@ -71,7 +81,6 @@ public class NamingResult extends BaseActivity {
 
         public MyBaseExpandableListAdapter() {
         }
-
         public MyBaseExpandableListAdapter(Context context, List<Map<String, T>> group, String groupName, List<List<Map<String, T>>> child) {
             this.context = context;
             this.group = group;
@@ -109,7 +118,6 @@ public class NamingResult extends BaseActivity {
         public Object getChild(int groupPosition, int childPosition) {
             return child.get(groupPosition).get(childPosition);
         }
-
         @Override
         public long getGroupId(int groupPosition) {
             return groupPosition;

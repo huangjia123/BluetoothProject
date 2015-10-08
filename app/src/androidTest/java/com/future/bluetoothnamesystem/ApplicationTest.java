@@ -18,7 +18,7 @@ public class ApplicationTest extends AndroidTestCase {
 
     Context mContext;
 
-    private String[] cuorseName = new String[]{"大学英语", "高数", "思修", "近代史", "大学物理",
+    private String[] cuorseName = new String[]{"英语", "高数", "思修", "近代史", "大学物理",
             "计算机导论", "操作系统", "计算机组成原理与接口技术", "数据库原理", "信息安全"};
 
     @Override

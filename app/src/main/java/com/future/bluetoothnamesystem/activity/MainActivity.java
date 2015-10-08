@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
-
     private GridView gvSet1;
     private String[] mItemsCallName = new String[]{"在线点名", "查看结果", "查看所有记录", "上传数据"};
     private List<String> list = new ArrayList<String>();
@@ -38,21 +37,20 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < 4; i++) {
             list.add(mItemsCallName[i]);
         }
+
         gvSet1 = (GridView) findViewById(R.id.gv_setting_choose);
         InnerAdapter adapter = new InnerAdapter(MainActivity.this, list);
-
-
         gvSet1.setAdapter(adapter);
         gvSet1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
-
                     case 0:
                         startActivity(new Intent(MainActivity.this,NamingStart.class));
                         break;
                     case 1:
-                        startActivity(new Intent(MainActivity.this,NamingResult.class));
+                        Toast.makeText(MainActivity.this,"王志成修改",Toast.LENGTH_LONG).show();
+                       // startActivity(new Intent(MainActivity.this,NamingResult.class));
                         break;
 
                     case 2:
@@ -67,7 +65,6 @@ public class MainActivity extends BaseActivity {
         });
 
     }
-
     public void goSet(View view){
         startActivity(new Intent(MainActivity.this,SettingActivity.class));
     }

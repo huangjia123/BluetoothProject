@@ -11,7 +11,6 @@ import com.future.bluetoothnamesystem.db.dao.BluetoothDao;
  */
 public class TestBlueToothDao extends AndroidTestCase{
     public Context mContext;
-
     public String[] stuName={"王志成","李志强","张少峰","惊天明","李过后","御寒","莎拉","约翰","龙珠",
             "王成","好志强","张峰","惊明","后来","御寒阁","莎拉的","约翰117","龙珠改"};
     public String[] teacherName={"李白","白居易","易中天","天波府","斧头帮","邦德","德邦"};
@@ -26,7 +25,6 @@ public class TestBlueToothDao extends AndroidTestCase{
         this.mContext=getContext();
         super.setUp();
     }
-
     public void testAdd() throws Exception {
         BluetoothDao dao=new BluetoothDao(mContext);
         NamingRecard namingRecord=new NamingRecard();
@@ -43,7 +41,6 @@ public class TestBlueToothDao extends AndroidTestCase{
                     namingRecord.setClassName("计科121");
                 }else{
                     namingRecord.setClassName("计科122");
-
                 }
                 namingRecord.setArrival(19+i+"");
                 namingRecord.setNon_arrival(i + "");
