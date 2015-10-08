@@ -1,6 +1,7 @@
 package com.future.bluetoothnamesystem.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,15 +42,18 @@ public class NamingResult extends BaseActivity {
 
     //用于显示点名结果的列表
     public void initData() {
-        courseName = "英语";
+        //courseName = "英语";
         BluetoothDao dao = new BluetoothDao(this);
         List<List<Map<String, String>>> mList = new ArrayList<List<Map<String, String>>>();
         List<List<Map<String, Object>>> mNoComingList = new ArrayList<List<Map<String, Object>>>();
         //选中的班级
         /**************************************************************/
-
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        courseName=bundle.getString("course");
+        ArrayList<String> mClassesChoosedList=bundle.getStringArrayList("classname");
         /**************************************************************/
-        List<Map<String, String>> mClassGroup = dao.findClass();
+        List<Map<String, String>> mClassGroup = dao.findClass(mClassesChoosedList);
         for (Map<String, String> map : mClassGroup) {
             String groupName = map.get("group");
             List<Map<String, String>> mStuItem = dao.findItem(groupName, courseName);

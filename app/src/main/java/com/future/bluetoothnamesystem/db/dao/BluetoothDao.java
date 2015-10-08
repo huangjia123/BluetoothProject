@@ -118,6 +118,7 @@ public class BluetoothDao {
      * @param courseName 课程名
      * @return
      */
+
     public List<Map<String, String>> findItem(String className, String courseName) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, String>> namingResult = new ArrayList<Map<String, String>>();
@@ -220,6 +221,35 @@ public class BluetoothDao {
 
         return namingResult;
     }
+
+    public List<NamingRecard> findByCourseAndClass(String selectClass, String selectCourse) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
+        Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
+                "arrival", "non_arrival", "late", "break", "this_time", "class_name"}, "course_name=? and class_name=?", new String[]{selectCourse, selectClass}, null, null, null);
+
+        while (cursor.moveToNext()) {
+            NamingRecard namingRecard = new NamingRecard();
+            namingRecard.setRec_id(cursor.getInt(0));
+            namingRecard.setStu_id(cursor.getLong(1));
+            namingRecard.setCourse(cursor.getString(2));
+            namingRecard.setName(cursor.getString(3));
+            namingRecard.setTeacherName(cursor.getString(4));
+            namingRecard.setArrival(cursor.getString(5));
+            namingRecard.setNon_arrival(cursor.getString(6));
+            namingRecard.setLate(cursor.getString(7));
+            namingRecard.setBreaks(cursor.getString(8));
+            namingRecard.setThisTime(cursor.getString(9));
+            namingRecard.setClassName(cursor.getString(10));
+            namingRecardList.add(namingRecard);
+        }
+
+        cursor.close();
+        db.close();
+        return namingRecardList;
+    }
+
 
     //更新本次点结果
     public void updateThisTime(String course_name,List<String> list){
