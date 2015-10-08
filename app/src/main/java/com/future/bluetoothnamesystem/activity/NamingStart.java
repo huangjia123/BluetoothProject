@@ -116,7 +116,6 @@ public class NamingStart extends BaseActivity {
                 mSelectedList.add(false);
             }
         }
-
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view = View.inflate(NamingStart.this, R.layout.class_item_selected, null);
