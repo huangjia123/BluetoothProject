@@ -26,18 +26,19 @@
             android:padding="15dp">
 
             <Spinner
+                android:id="@+id/sp_choose_course"
                 android:layout_width="120dp"
                 android:layout_height="30dp"
-                android:background="@mipmap/spinner"
-                android:entries="@array/course"/>
+                android:background="@mipmap/spinner" />
 
             <Spinner
+                android:id="@+id/sp_choose_class"
                 android:layout_width="120dp"
                 android:layout_height="30dp"
-                android:background="@mipmap/spinner"
-                android:entries="@array/classes" />
+                android:background="@mipmap/spinner" />
 
             <Button
+                android:id="@+id/search_button"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:background="#8fff"

@@ -118,7 +118,6 @@ public class BluetoothDao {
      * @param courseName 课程名
      * @return
      */
-
     public List<Map<String, String>> findItem(String className, String courseName) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, String>> namingResult = new ArrayList<Map<String, String>>();
