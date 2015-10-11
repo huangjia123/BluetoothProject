@@ -1,11 +1,11 @@
 package com.future.bluetoothnamesystem.activity;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +16,22 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.activity.base.BaseActivity;
 import com.future.bluetoothnamesystem.adapter.MyAdapter;
 import com.future.bluetoothnamesystem.db.dao.BluetoothDao;
 import com.future.bluetoothnamesystem.db.dao.TestCourseInfoDao;
 import com.future.bluetoothnamesystem.db.dao.TestStudentInfoDao;
-
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 public class NamingStart extends BaseActivity {
     Spinner spChooseClass,spChooseCourse;
+    List<String> mClassesList,mCoursesList = new ArrayList<String>();
+    String selectCourse;
     private String[] mItemsCallName = new String[]{"选择班级", "选择课程", "开始点名", "查看结果"};
     private ArrayList<String> mClassesChoosedList = new ArrayList<>();
-    List<String> mClassesList,mCoursesList = new ArrayList<String>();
     private GridView gv;
     private List<Boolean> mSelectedList;
     private MySelectAdapter adapter;
@@ -44,14 +42,22 @@ public class NamingStart extends BaseActivity {
     private BlutetoothReceiver blutetoothReceiver;
     private List<String> list = new ArrayList<String>();
     private int flag=0;
-    String selectCourse;
+    //从sharedPreferences中读出的课程
+    private String sCourse;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    int courseid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naming_start);
+        spChooseClass = (Spinner) findViewById(R.id.sp_choose_class);
+        spChooseCourse= (Spinner) findViewById(R.id.sp_choose_course);
+        sharedPreferences= getSharedPreferences("wujay", Context.MODE_PRIVATE); //私有数据
+        editor= sharedPreferences.edit();//获取编辑器
+
         // 获得BluetoothAdapter对象，该API是android 2.0开始支持的
         adapter1 = BluetoothAdapter.getDefaultAdapter();
-
         // adapter不等于null，说明本机有蓝牙设备
         if (adapter1 != null) {
             Toast.makeText(NamingStart.this, "本机有蓝牙设备!", Toast.LENGTH_LONG).show();
@@ -66,7 +72,6 @@ public class NamingStart extends BaseActivity {
         } else {
             Toast.makeText(NamingStart.this, "本机没有蓝牙设备!", Toast.LENGTH_LONG).show();
         }
-
         // 创建一个IntentFilter对象将其action指定为BluetoothDevice.ACTION_FOUND；
         IntentFilter intentFilter = new IntentFilter(
                 BluetoothDevice.ACTION_FOUND);
@@ -77,37 +82,37 @@ public class NamingStart extends BaseActivity {
         intentFilter = new IntentFilter(
                 BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         registerReceiver(blutetoothReceiver, intentFilter);
-
+        /*******************/
+        //如果课程和班级为空则从存储中读取
+        if(reader()!=null){
+            mClassesChoosedList=reader();
+            courseid = sharedPreferences.getInt("selectCourse", 0);
+        }
+        /*******************/
         initData();
         initView();
     }
-
     public void initView() {
         ll = (LinearLayout) findViewById(R.id.linearLayout);
         llClassChoose = (LinearLayout) findViewById(R.id.ll_class_choose);
         gv = (GridView) findViewById(R.id.gv_classes_choosed);
-        spChooseClass = (Spinner) findViewById(R.id.sp_choose_class);
-        spChooseCourse= (Spinner) findViewById(R.id.sp_choose_course);
-
         spChooseClass.setAdapter(adapter);
         spChooseCourse.setAdapter(courseAdapter);
+        /*****************************/
+        //获取课程位置
+        spChooseCourse.setSelection(courseid);
+        /****************************/
         gv.setAdapter(mClassesChoosedAdapter);
     }
-
     public void initData() {
         TestStudentInfoDao siDao = new TestStudentInfoDao(NamingStart.this);
         mClassesList = siDao.findClass();
         TestCourseInfoDao tcDao=new TestCourseInfoDao(NamingStart.this);
         mCoursesList=tcDao.findAllCourseNames();
-
         adapter = new MySelectAdapter(NamingStart.this, mClassesList);
-
         courseAdapter=new ArrayAdapter(NamingStart.this,android.R.layout.simple_list_item_single_choice,mCoursesList);
-       // courseAdapter=new ArrayAdapter(NamingStart.this,android.R.layout.select_dialog_multichoice,mCoursesList);
         mClassesChoosedAdapter = new ArrayAdapter(NamingStart.this, R.layout.gridview_text, mClassesChoosedList);
-
     }
-
     class MySelectAdapter extends MyAdapter<String> {
         public MySelectAdapter(Context ctx, List<String> list) {
             super(ctx, list);
@@ -136,12 +141,9 @@ public class NamingStart extends BaseActivity {
                         mSelectedList.set(position, false);
                         mClassesChoosedList.remove(className);
                         mClassesChoosedAdapter.notifyDataSetChanged();
-
                     }
-
                 }
             });
-
             return view;
         }
     }
@@ -150,7 +152,12 @@ public class NamingStart extends BaseActivity {
     public void goStart(View view){
         if(spChooseCourse.getSelectedItem()!=null&&mClassesChoosedList.size()!=0){
             selectCourse=spChooseCourse.getSelectedItem().toString();
-          //  Toast.makeText(NamingStart.this,"选择的课程"+selectCourse,Toast.LENGTH_LONG).show();
+            /***********************************************/
+            courseid=spChooseCourse.getSelectedItemPosition();
+            //把课程和班级传入
+            Set<String>setchoosedList=new HashSet<String>(mClassesChoosedList);
+            write(courseid,setchoosedList);
+            /**************************************/
             if(selectCourse!=null){
                 // Toast.makeText(NamingStart.this,"佳佳的功能",Toast.LENGTH_SHORT).show();
                 //如果蓝牙开启
@@ -192,7 +199,6 @@ public class NamingStart extends BaseActivity {
           Toast.makeText(NamingStart.this,"点名未完成",Toast.LENGTH_LONG).show();
       }
 }
-
     //创建广播接收者
     class BlutetoothReceiver extends BroadcastReceiver {
         @Override
@@ -203,7 +209,7 @@ public class NamingStart extends BaseActivity {
                 BluetoothDevice device = intent
                         .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // 搜索到的不是已经绑定的蓝牙设备
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                if (device.getBondState()!= BluetoothDevice.BOND_BONDED) {
                     // 把扫描的mac地址发到list中
                     list.add(device.getAddress());
                 }
@@ -219,16 +225,31 @@ public class NamingStart extends BaseActivity {
                     BluetoothDao bluetoothDao=new BluetoothDao(NamingStart.this);
                     bluetoothDao.updateThisTime(selectCourse,list);
                 }
-//                for(int i=0;i<list.size();i++){
-//
-//                    Toast.makeText(NamingStart.this,"*******"+list.get(i),Toast.LENGTH_LONG).show();
-//
-//                }
-
             }
         }
     }
-
+    //
+    /*缓存数据
+     *把获取的班级和课程信息存起来
+     *
+     * */
+    public void write(int courseid,Set<String>set){
+        editor.putInt("selectCourse", courseid);
+        editor.putStringSet("mClassesChoosedList", set);
+        editor.commit();//提交修改
+    }
+    /*读取数据
+     * 把班级和课程信息取出来
+     **/
+    public ArrayList<String> reader(){
+        Set<String> stringSet = sharedPreferences.getStringSet("mClassesChoosedList", null);
+        if(stringSet==null){
+            return null;
+        }else{
+            ArrayList<String> list=new ArrayList<String>(stringSet);
+            return list;
+        }
+    }
     @Override
     protected void onDestroy() {
         Toast.makeText(NamingStart.this, "我已停止，蓝牙点名搜索", Toast.LENGTH_SHORT).show();

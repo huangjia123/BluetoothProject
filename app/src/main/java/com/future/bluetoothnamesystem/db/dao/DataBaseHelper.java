@@ -26,7 +26,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * tableName2学生信息表
      */
     private static final String tableName2 = "student_information";
-
     public DataBaseHelper(Context context) {
         super(context, dataBaseName, null, version);
     }
@@ -40,7 +39,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         String table1 = "CREATE TABLE course (course_id INT(5) PRIMARY KEY,course_name VARCHAR( 10 ) NOT NULL);";
         db.execSQL(table1);
-        db.execSQL("insert into course(course_id,course_name) values (1,'英语')");
+       // db.execSQL("insert into course(course_id,course_name) values (1,'英语')");
         String table2 = "CREATE TABLE student_information (stu_id BIGINT(15) PRIMARY KEY,stu_name VARCHAR( 5 )," +
                 "macAddress VARCHAR(30),  class_name VARCHAR(10));";
         db.execSQL(table2);

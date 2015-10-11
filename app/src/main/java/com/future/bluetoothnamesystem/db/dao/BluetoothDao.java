@@ -47,7 +47,6 @@ public class BluetoothDao {
         List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
         Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
                 "arrival", "non_arrival", "late", "break", "this_time", "class_name", "naming_record"}, null, null, null, null, null);
-
         while (cursor.moveToNext()) {
             NamingRecard namingRecard = new NamingRecard();
             namingRecard.setRec_id(cursor.getInt(0));
@@ -63,7 +62,6 @@ public class BluetoothDao {
             namingRecard.setClassName(cursor.getString(10));
             namingRecardList.add(namingRecard);
         }
-
         cursor.close();
         db.close();
         return namingRecardList;
@@ -118,7 +116,6 @@ public class BluetoothDao {
      * @param courseName 课程名
      * @return
      */
-
     public List<Map<String, String>> findItem(String className, String courseName) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, String>> namingResult = new ArrayList<Map<String, String>>();
@@ -135,7 +132,6 @@ public class BluetoothDao {
         }
         return namingResult;
     }
-
     public List<Map<String, Object>> findNoComingResult(String group, String courseName) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, Object>> namingResult = new ArrayList<Map<String, Object>>();
@@ -143,7 +139,6 @@ public class BluetoothDao {
                         "stu_name", "teacher_name", "arrival", "non_arrival", "late", "break", "this_time",
                         "class_name"}, "class_name=? and course_name=?",
                 new String[]{group, courseName}, null, null, null);
-
         while (cursor.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
 
