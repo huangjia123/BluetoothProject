@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by baiju on 2015/8/27.
  */
-public class BluetoothDao {
+public class BluetoothDao{
     public DataBaseHelper helper;
     public BluetoothDao(Context context) {
         helper = new DataBaseHelper(context);
@@ -43,7 +43,6 @@ public class BluetoothDao {
 
     public List<NamingRecard> findAll() {
         SQLiteDatabase db = helper.getReadableDatabase();
-
         List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
         Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
                 "arrival", "non_arrival", "late", "break", "this_time", "class_name", "naming_record"}, null, null, null, null, null);
@@ -65,7 +64,6 @@ public class BluetoothDao {
         cursor.close();
         db.close();
         return namingRecardList;
-
     }
 
     public List<Map<String, String>> findClass() {
@@ -97,7 +95,6 @@ public class BluetoothDao {
         List<Map<String, String>> group = new ArrayList<Map<String, String>>();
         String sql="select class_name,count(distinct stu_id) from naming_record where class_name in(" + sb.toString()+") group by class_name";
         Cursor cursor = db.rawQuery(sql, null);
-
         while (cursor.moveToNext()) {
             Map<String, String> map = new HashMap<String, String>();
             map.put("group", cursor.getString(0));
@@ -141,7 +138,6 @@ public class BluetoothDao {
                 new String[]{group, courseName}, null, null, null);
         while (cursor.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
-
             map.put("stu_id", cursor.getString(1).toString());
             map.put("stu_name", cursor.getString(3));
             map.put("this_time", cursor.getString(9));
@@ -190,11 +186,9 @@ public class BluetoothDao {
     public List<Map<String, NamingRecard>> findNamingResult(String Group) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, NamingRecard>> namingResult = new ArrayList<Map<String, NamingRecard>>();
-
         Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name",
                 "stu_name", "teacher_name", "arrival", "non_arrival", "late", "break", "this_time",
                 "class_name", "naming_record"}, null, null, null, null, null);
-
         while (cursor.moveToNext()) {
             Map<String, NamingRecard> map = new HashMap<String, NamingRecard>();
             NamingRecard namingRecard = new NamingRecard();
@@ -213,13 +207,11 @@ public class BluetoothDao {
             map.put("namingResult", namingRecard);
             namingResult.add(map);
         }
-
         return namingResult;
     }
 
     public List<NamingRecard> findByCourseAndClass(String selectClass, String selectCourse) {
         SQLiteDatabase db = helper.getReadableDatabase();
-
         List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
         Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
                 "arrival", "non_arrival", "late", "break", "this_time", "class_name"}, "course_name=? and class_name=?", new String[]{selectCourse, selectClass}, null, null, null);

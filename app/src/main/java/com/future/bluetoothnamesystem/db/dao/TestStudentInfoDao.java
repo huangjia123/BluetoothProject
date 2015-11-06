@@ -34,7 +34,6 @@ public class TestStudentInfoDao {
      */
     public boolean add(StudentInfo studentInfo) {
         SQLiteDatabase db = helper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put("stu_id", studentInfo.getStuId() + "");
         values.put("stu_name", studentInfo.getStuName());
@@ -95,12 +94,9 @@ public class TestStudentInfoDao {
         String stuName = "";
         String macAddress = "";
         String className = "";
-
-
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.query("student_information", new String[]{"stu_name", "macAddress", "class_name"},
                 "stu_id = ?", new String[]{stuId}, null, null, null);
-
         if (cursor.moveToNext()) {
             stuName = cursor.getString(0);
             macAddress = cursor.getString(1);
@@ -110,7 +106,6 @@ public class TestStudentInfoDao {
         db.close();
         return stuId + "\t" + stuName + "\t" + macAddress + "\t" + className;
     }
-
     /**
      * 查询所有的学生信息
      *

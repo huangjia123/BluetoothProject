@@ -17,13 +17,10 @@ import com.future.bluetoothnamesystem.view.LineGridView;
 
 public class SettingActivity extends BaseActivity {
     private LineGridView  gvSet;
-
     private String[] mItems = new String[] { "课程设置", "班级管理", "导出数据", "恢复数据",
             "教师信息", "设置密码" };
-
     private int[] mPics = new int[] { R.mipmap.set,R.mipmap.manage,
             R.mipmap.ban,R.mipmap.car,R.mipmap.sigh,R.mipmap.lock};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +62,6 @@ public class SettingActivity extends BaseActivity {
                         //
                         startActivity(new Intent(SettingActivity.this,PasswordLock.class));
                         break;
-
                     default:
                         break;
                 }

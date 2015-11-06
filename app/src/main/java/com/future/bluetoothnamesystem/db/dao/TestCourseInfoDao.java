@@ -126,6 +126,7 @@ public class TestCourseInfoDao {
         while(cursor.moveToNext()){
             //courseInfo.setCourseName(cursor.getString(1));
             courseNames.add(cursor.getString(1));
+
         }
         cursor.close();
         db.close();

@@ -151,6 +151,7 @@ public class NamingStart extends BaseActivity {
     //开始点名
     public void goStart(View view){
         if(spChooseCourse.getSelectedItem()!=null&&mClassesChoosedList.size()!=0){
+
             selectCourse=spChooseCourse.getSelectedItem().toString();
             /***********************************************/
             courseid=spChooseCourse.getSelectedItemPosition();

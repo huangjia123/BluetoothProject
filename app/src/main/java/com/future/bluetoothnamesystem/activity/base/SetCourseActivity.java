@@ -17,6 +17,8 @@ import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.bean.CourseInfo;
 import com.future.bluetoothnamesystem.db.dao.TestCourseInfoDao;
 import com.future.bluetoothnamesystem.dialog.AddCourseDialog;
+import com.future.bluetoothnamesystem.dialog.DeleteCourseDialog;
+import com.future.bluetoothnamesystem.dialog.UpdateCourseDialog;
 import com.future.bluetoothnamesystem.view.LineGridView;
 
 import java.util.List;
@@ -59,15 +61,17 @@ public class SetCourseActivity extends BaseActivity {
         updateCourseImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SetCourseActivity.this,"dssdfd",Toast.LENGTH_SHORT).show();
-                Log.i("asd", "asdf2");
+                Toast.makeText(SetCourseActivity.this,"修改课程",Toast.LENGTH_SHORT).show();
+                UpdateCourseDialog updateCourseDialog=new UpdateCourseDialog(SetCourseActivity.this);
+                updateCourseDialog.show();
             }
         });
         deleteCourseImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SetCourseActivity.this, "dssdfd", Toast.LENGTH_SHORT).show();
-                Log.i("asd", "asdf3");
+                Toast.makeText(SetCourseActivity.this, "删除课程", Toast.LENGTH_SHORT).show();
+                DeleteCourseDialog deleteCourseDialog=new DeleteCourseDialog(SetCourseActivity.this);
+                deleteCourseDialog.show();
             }
         });
     }
