@@ -53,6 +53,7 @@ public class CheckResultActivity extends BaseActivity {
                 classAdapter = new ArrayAdapter(CheckResultActivity.this, R.layout.simple_list_item, mClassesList);
                 spChooseClass.setAdapter(classAdapter);
             }
+            //测试一次
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -144,3 +145,4 @@ public class CheckResultActivity extends BaseActivity {
         }
     }
 }
+//这次要成功啊！
