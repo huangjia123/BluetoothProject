@@ -3,10 +3,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.future.bluetoothnamesystem.bean.NamingRecard;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
-import java.security.acl.Group;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +27,7 @@ public class BluetoothDao{
     public boolean addNamingRecard(NamingRecard namingRecard) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("id", namingRecard.getRec_id());
+        contentValues.put("_id", namingRecard.getRec_id());
         contentValues.put("stu_id", namingRecard.getStu_id());
         contentValues.put("course_name", namingRecard.getCourse());
         contentValues.put("stu_name", namingRecard.getName());
@@ -44,8 +49,8 @@ public class BluetoothDao{
     public List<NamingRecard> findAll() {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
-        Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
-                "arrival", "non_arrival", "late", "break", "this_time", "class_name", "naming_record"}, null, null, null, null, null);
+        Cursor cursor = db.query("naming_record", new String[]{"_id", "stu_id", "course_name", "stu_name", "teacher_name",
+                "arrival", "non_arrival", "late", "break", "this_time", "class_name"}, null, null, null, null, null);
         while (cursor.moveToNext()) {
             NamingRecard namingRecard = new NamingRecard();
             namingRecard.setRec_id(cursor.getInt(0));
@@ -84,7 +89,7 @@ public class BluetoothDao{
      * 查询选择的班级
      *
      * */
-    public List<Map<String, String>> findClass(ArrayList<String> mClassesChoosedList) {
+    public List<Map<String, String>> findClass(ArrayList<String> mClassesChoosedList,String courseName) {
         StringBuilder sb = new StringBuilder();
         for (String str : mClassesChoosedList) {
             sb.append(",'" + str + "'");
@@ -93,7 +98,7 @@ public class BluetoothDao{
         sb.deleteCharAt(0);
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, String>> group = new ArrayList<Map<String, String>>();
-        String sql="select class_name,count(distinct stu_id) from naming_record where class_name in(" + sb.toString()+") group by class_name";
+        String sql="select class_name,count(distinct stu_id) from naming_record where course_name='"+courseName+"' and class_name in(" + sb.toString()+") group by class_name";
         Cursor cursor = db.rawQuery(sql, null);
         while (cursor.moveToNext()) {
             Map<String, String> map = new HashMap<String, String>();
@@ -106,6 +111,7 @@ public class BluetoothDao{
         db.close();
         return group;
     }
+
     /**
      * 根据信息中的课程 ，以及班级，，查找学生信息
      *
@@ -116,7 +122,7 @@ public class BluetoothDao{
     public List<Map<String, String>> findItem(String className, String courseName) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, String>> namingResult = new ArrayList<Map<String, String>>();
-        Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name",
+        Cursor cursor = db.query("naming_record", new String[]{"_id", "stu_id", "course_name",
                         "stu_name", "teacher_name", "arrival", "non_arrival", "late", "break", "this_time",
                         "class_name"}, "class_name=? and course_name=?", new String[]{className, courseName},
                 null, null, null);
@@ -132,10 +138,11 @@ public class BluetoothDao{
     public List<Map<String, Object>> findNoComingResult(String group, String courseName) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, Object>> namingResult = new ArrayList<Map<String, Object>>();
-        Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name",
+        Cursor cursor = db.query("naming_record", new String[]{"_id", "stu_id", "course_name",
                         "stu_name", "teacher_name", "arrival", "non_arrival", "late", "break", "this_time",
                         "class_name"}, "class_name=? and course_name=?",
                 new String[]{group, courseName}, null, null, null);
+
         while (cursor.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("stu_id", cursor.getString(1).toString());
@@ -159,7 +166,6 @@ public class BluetoothDao{
 //                    break;
 //                default:
 //                    break;
-//
 //            }
             namingResult.add(map);
         }
@@ -186,7 +192,7 @@ public class BluetoothDao{
     public List<Map<String, NamingRecard>> findNamingResult(String Group) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<Map<String, NamingRecard>> namingResult = new ArrayList<Map<String, NamingRecard>>();
-        Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name",
+        Cursor cursor = db.query("naming_record", new String[]{"_id", "stu_id", "course_name",
                 "stu_name", "teacher_name", "arrival", "non_arrival", "late", "break", "this_time",
                 "class_name", "naming_record"}, null, null, null, null, null);
         while (cursor.moveToNext()) {
@@ -209,13 +215,12 @@ public class BluetoothDao{
         }
         return namingResult;
     }
-
     public List<NamingRecard> findByCourseAndClass(String selectClass, String selectCourse) {
         SQLiteDatabase db = helper.getReadableDatabase();
         List<NamingRecard> namingRecardList = new ArrayList<NamingRecard>();
-        Cursor cursor = db.query("naming_record", new String[]{"id", "stu_id", "course_name", "stu_name", "teacher_name",
-                "arrival", "non_arrival", "late", "break", "this_time", "class_name"}, "course_name=? and class_name=?", new String[]{selectCourse, selectClass}, null, null, null);
-
+        Cursor cursor = db.query("naming_record", new String[]{"_id", "stu_id", "course_name", "stu_name", "teacher_name",
+                "arrival", "non_arrival", "late", "break", "this_time", "class_name"}, "course_name=? and class_name=?",
+                new String[]{selectCourse, selectClass}, null, null, null);
         while (cursor.moveToNext()) {
             NamingRecard namingRecard = new NamingRecard();
             namingRecard.setRec_id(cursor.getInt(0));
@@ -231,20 +236,25 @@ public class BluetoothDao{
             namingRecard.setClassName(cursor.getString(10));
             namingRecardList.add(namingRecard);
         }
-
         cursor.close();
         db.close();
         return namingRecardList;
     }
-
-
     //更新本次点结果
     public void updateThisTime(String course_name,List<String> list){
         SQLiteDatabase db = helper.getWritableDatabase();
         for (int i = 0; i < list.size(); i++) {
             String mac=list.get(i);
-            db.execSQL("update naming_record set this_time='1' where stu_name in(select stu_name from student_information where macAddress='"+mac+"') and course_name='"+course_name+"'");
+            db.execSQL("update naming_record set this_time='1' where stu_name " +
+                    "in(select stu_name from student_information where macAddress='"+mac+"') " +
+                    "and course_name='"+course_name+"'");
         }
     }
-
+    //查询naming_record表中是否有老师
+    public Cursor selectTeacher(String teacherNameId,String stuid ){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String sql="select teacher_name from naming_record where teacher_name='"+teacherNameId+"' and stu_id='"+stuid+"'";
+        Cursor cursor=db.rawQuery(sql,null);
+        return cursor;
+    }
 }

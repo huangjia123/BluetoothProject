@@ -9,10 +9,8 @@
 
     <com.future.bluetoothnamesystem.view.FutureTitleBar
         android:id="@+id/title_bar"
-
         android:layout_width="match_parent"
         android:layout_height="@dimen/abc_action_bar_default_height_material"
-
         future:activity_title="导出数据" />
 
     <ImageView
@@ -24,10 +22,8 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-
         android:background="@drawable/iv_border"
         android:padding="3dp"
         android:src="@mipmap/naming" />
@@ -40,8 +36,6 @@
         android:layout_marginTop="1dp"
         android:layout_weight="8"
         android:gravity="center|center_horizontal">
-
-
         <TextView
             android:id="@+id/tv_choose_class"
             android:layout_width="wrap_content"
@@ -76,29 +70,18 @@
             android:layout_alignBottom="@id/tv_choose_course"
             android:layout_alignLeft="@id/tv_choose_course"
             android:layout_marginLeft="100dp"
-            android:entries="@array/spingarr"
+            android:entries="@array/course"
             />
 
         <TextView
             android:id="@+id/tv_choose_location"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_below="@id/tv_choose_course"
             android:layout_marginTop="20dp"
-            android:text="请选择导出位置" />
-
-        <Spinner
-            android:id="@+id/sp_choose_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_alignBottom="@id/tv_choose_location"
-            android:layout_alignLeft="@id/tv_choose_location"
-            android:layout_marginLeft="100dp"
-            android:entries="@array/spingarr" />
-
-
+            android:gravity="center"
+            android:text="文件在手机根目录下" />
     </RelativeLayout>
 
     <LinearLayout
@@ -109,6 +92,8 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/ture"
+            android:onClick="ensureExport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/click_ok"

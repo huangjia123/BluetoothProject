@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -19,7 +21,9 @@ import android.widget.Toast;
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.activity.base.BaseActivity;
 import com.future.bluetoothnamesystem.adapter.MyAdapter;
+import com.future.bluetoothnamesystem.bean.NamingRecard;
 import com.future.bluetoothnamesystem.db.dao.BluetoothDao;
+import com.future.bluetoothnamesystem.db.dao.DataBaseHelper;
 import com.future.bluetoothnamesystem.db.dao.TestCourseInfoDao;
 import com.future.bluetoothnamesystem.db.dao.TestStudentInfoDao;
 import java.util.ArrayList;
@@ -44,15 +48,21 @@ public class NamingStart extends BaseActivity {
     private int flag=0;
     //从sharedPreferences中读出的课程
     private String sCourse;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences,sharedP;
     private SharedPreferences.Editor editor;
     int courseid;
+    DataBaseHelper database;
+    public Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naming_start);
+        database=new DataBaseHelper(this);
+        this.mContext = getBaseContext();
+
         spChooseClass = (Spinner) findViewById(R.id.sp_choose_class);
         spChooseCourse= (Spinner) findViewById(R.id.sp_choose_course);
+        sharedP=getSharedPreferences("asdf", Context.MODE_PRIVATE);
         sharedPreferences= getSharedPreferences("wujay", Context.MODE_PRIVATE); //私有数据
         editor= sharedPreferences.edit();//获取编辑器
 
@@ -148,15 +158,41 @@ public class NamingStart extends BaseActivity {
         }
     }
 
+    //生成一个点名名单记录
+    public void jilu(String spChooseCourse,String mClassesChoosedList){
+       Cursor cursor= database.Search(mClassesChoosedList);
+        int m = 0;
+        BluetoothDao dao=new BluetoothDao(mContext);
+        NamingRecard namingRecord=new NamingRecard();
+        while(cursor.moveToNext()){
+            namingRecord.setRec_id(m++);
+            namingRecord.setStu_id(cursor.getLong(0));
+            namingRecord.setName(cursor.getString(1));
+            namingRecord.setTeacherName( sharedP.getString("teacerteachername", null));
+            namingRecord.setCourse(spChooseCourse);
+            namingRecord.setClassName(mClassesChoosedList);
+            namingRecord.setArrival(0+"");
+            namingRecord.setNon_arrival(0+"");
+            namingRecord.setLate(0+"");
+            namingRecord.setBreaks(0+"");
+            namingRecord.setThisTime(0 + "");
+            dao.addNamingRecard(namingRecord);
+        }
+    }
+    Set<String>setchoosedList;
     //开始点名
     public void goStart(View view){
+        for(int i=0;i<mClassesChoosedList.size();i++){
+            jilu(spChooseCourse.getSelectedItem().toString(),mClassesChoosedList.get(i));
+        }
+
         if(spChooseCourse.getSelectedItem()!=null&&mClassesChoosedList.size()!=0){
 
             selectCourse=spChooseCourse.getSelectedItem().toString();
             /***********************************************/
             courseid=spChooseCourse.getSelectedItemPosition();
             //把课程和班级传入
-            Set<String>setchoosedList=new HashSet<String>(mClassesChoosedList);
+            setchoosedList=new HashSet<String>(mClassesChoosedList);
             write(courseid,setchoosedList);
             /**************************************/
             if(selectCourse!=null){
@@ -188,10 +224,17 @@ public class NamingStart extends BaseActivity {
               }else{
                   Toast.makeText(NamingStart.this,"请选择课程",Toast.LENGTH_LONG).show();
               }
+              //把点名据获取的课程班级记录下来
+              SharedPreferences sha=getSharedPreferences("NameDian", Context.MODE_PRIVATE); //私有数据
+              SharedPreferences.Editor editorName= sha.edit();//获取编辑器
+              Log.e("AAA","--------->>>"+selectCourse);
+              editorName.putString("course", selectCourse);
+              editorName.putStringSet("mClassesChoosedList",setchoosedList);
+              editorName.commit();
               Toast.makeText(NamingStart.this,"****"+selectCourse,Toast.LENGTH_LONG).show();
               Intent intent=new Intent(NamingStart.this,NamingResult.class);
-              intent.putStringArrayListExtra("classname",mClassesChoosedList);
-              intent.putExtra("course",selectCourse);
+             /* intent.putStringArrayListExtra("classname",mClassesChoosedList);
+              intent.putExtra("course",selectCourse);*/
               startActivity(intent);
           }else{
               Toast.makeText(NamingStart.this,"请查看是否选中课程和班级",Toast.LENGTH_LONG).show();
@@ -251,6 +294,8 @@ public class NamingStart extends BaseActivity {
             return list;
         }
     }
+
+
     @Override
     protected void onDestroy() {
         Toast.makeText(NamingStart.this, "我已停止，蓝牙点名搜索", Toast.LENGTH_SHORT).show();

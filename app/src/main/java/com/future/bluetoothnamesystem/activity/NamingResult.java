@@ -1,6 +1,7 @@
 package com.future.bluetoothnamesystem.activity;
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.activity.base.BaseActivity;
 import com.future.bluetoothnamesystem.bean.StudentInfo;
@@ -34,7 +37,7 @@ public class NamingResult extends BaseActivity {
         initData();
         resultView.setAdapter(mNoComingAdapter);
     }
-
+    ArrayList<String> mClassesChoosedList;
     //用于显示点名结果的列表
     public void initData() {
         BluetoothDao dao = new BluetoothDao(this);
@@ -42,25 +45,38 @@ public class NamingResult extends BaseActivity {
         List<List<Map<String, Object>>> mNoComingList = new ArrayList<List<Map<String, Object>>>();
         //选中的班级
         /**************************************************************/
-        Intent intent=getIntent();
-        Bundle bundle=intent.getExtras();
-        courseName=bundle.getString("course");
-        ArrayList<String> mClassesChoosedList=bundle.getStringArrayList("classname");
-        /**************************************************************/
-        List<Map<String, String>> mClassGroup = dao.findClass(mClassesChoosedList);
-        for (Map<String, String> map : mClassGroup) {
-            String groupName = map.get("group");
-            List<Map<String, String>> mStuItem = dao.findItem(groupName, courseName);
-            List<Map<String, Object>> mStuNoComingItem = dao.findNoComingResult(groupName, courseName);
-            mList.add(mStuItem);
-            mNoComingList.add(mStuNoComingItem);
+        SharedPreferences share=getSharedPreferences("NameDian", Activity.MODE_WORLD_READABLE);
+
+        //SharedPreferences sha=getSharedPreferences("NameDian", Context.MODE_PRIVATE); //私有数据
+        courseName= share.getString("course", "");
+        Set<String> stringSet = share.getStringSet("mClassesChoosedList", null);
+        if(stringSet!=null){
+            mClassesChoosedList=new ArrayList<String>(stringSet);
         }
-        mComingAdapter = new SimpleExpandableListAdapter(this, mClassGroup,
-                R.layout.tag_item_result_naming, new String[]{"group", "stuCount"},
-                new int[]{R.id.class_tag, R.id.total_number}, mList, R.layout.item_result_naming,
-                new String[]{"stu_id", "stu_name"}, new int[]{R.id.stu_id, R.id.id_name});
-        mNoComingAdapter = new MyBaseExpandableListAdapter(this, mClassGroup,
-                "group", mNoComingList);
+       /* Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();*/
+       // courseName=bundle.getString("course");
+        //ArrayList<String> mClassesChoosedList=bundle.getStringArrayList("classname");
+        /**************************************************************/
+        if(mClassesChoosedList!=null&&courseName!=null){
+            List<Map<String, String>> mClassGroup = dao.findClass(mClassesChoosedList,courseName);
+            for (Map<String, String> map : mClassGroup) {
+                String groupName = map.get("group");
+                List<Map<String, String>> mStuItem = dao.findItem(groupName, courseName);
+                List<Map<String, Object>> mStuNoComingItem = dao.findNoComingResult(groupName, courseName);
+                mList.add(mStuItem);
+                mNoComingList.add(mStuNoComingItem);
+            }
+            mComingAdapter = new SimpleExpandableListAdapter(this, mClassGroup,
+                    R.layout.tag_item_result_naming, new String[]{"group", "stuCount"},
+                    new int[]{R.id.class_tag, R.id.total_number}, mList, R.layout.item_result_naming,
+                    new String[]{"stu_id", "stu_name"}, new int[]{R.id.stu_id, R.id.id_name});
+            mNoComingAdapter = new MyBaseExpandableListAdapter(this, mClassGroup,
+                    "group", mNoComingList);
+        }else {
+            Toast.makeText(NamingResult.this,"无点名记录！",Toast.LENGTH_SHORT).show();
+        }
+
     }
     class MyBaseExpandableListAdapter<T> extends BaseExpandableListAdapter {
         private List<Map<String, T>> group;
@@ -146,7 +162,6 @@ public class NamingResult extends BaseActivity {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-
             holder.groupPosition=groupPosition;
             holder.childPosition=childPosition;
             holder.rgThisTime.setTag(holder.stuId);

@@ -11,9 +11,8 @@ import com.future.bluetoothnamesystem.db.dao.BluetoothDao;
  */
 public class TestBlueToothDao extends AndroidTestCase{
     public Context mContext;
-    public String[] stuName={"王志成","李志强","张少峰","惊天明","李过后","御寒","莎拉","约翰","龙珠",
-            "王成","好志强","张峰","惊明","后来","御寒阁","莎拉的","约翰117","龙珠改"};
-    public String[] teacherName={"李白","白居易","易中天","天波府","斧头帮","邦德","德邦"};
+    public String[] stuName={"王志成","李志强"};
+    public String[] teacherName={"李白","白居易"};
     public String[] courseName={"英语","高等数学","C语言","概率论","数据库","离散数学","近代史"};
     public String[] stuId={"20121514101","20121514102","20121514103","20121514104","20121514105",
             "20121514106","20121514107","20121514108","20121514109","20121514201","20121514202",

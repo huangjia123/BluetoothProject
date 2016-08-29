@@ -69,22 +69,22 @@
                         android:text="选择班级"/>
                     <Spinner
                         android:id="@+id/sp_choose_class"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
                         android:prompt="@string/choose_class"
                         android:spinnerMode="dialog" />
                 </LinearLayout>
 
                 <GridView
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:id="@+id/gv_classes_choosed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:numColumns="5"/>
+                    android:numColumns="4"/>
 
             </LinearLayout>
 
@@ -103,10 +103,11 @@
                     android:id="@+id/sp_choose_course"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:prompt="@string/choose_course"
-                    android:spinnerMode="dialog" />
+                    android:spinnerMode="dialog"
+                    />
             </LinearLayout>
 
             <LinearLayout

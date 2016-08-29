@@ -137,17 +137,13 @@ public class TestStudentInfoDao {
         List<String> group = new ArrayList<String>();
         Cursor cursor = db.query("student_information", new String[]{"class_name", "count(distinct class_name)"}, null, null, "class_name", null, null);
         while (cursor.moveToNext()) {
-
             String className = cursor.getString(0);
-
             group.add(className);
-
         }
         cursor.close();
         db.close();
         return group;
     }
-
     /**
      * 查询班级信息
      */
@@ -160,9 +156,7 @@ public class TestStudentInfoDao {
             ClassInfo ci = new ClassInfo(cursor.getString(1), cursor.getInt(0));
             // String className=cursor.getString(0);
             classNameAndCountMap.put(cursor.getString(1), cursor.getInt(0));
-
             group.add(ci);
-
         }
         cursor.close();
         db.close();

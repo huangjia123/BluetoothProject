@@ -1,101 +1,158 @@
 package com.future.bluetoothnamesystem.activity;
 
-import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.future.bluetoothnamesystem.R;
 import com.future.bluetoothnamesystem.activity.base.BaseActivity;
-import com.future.bluetoothnamesystem.adapter.MyAdapter;
-import com.future.bluetoothnamesystem.bean.CourseInfo;
+import com.future.bluetoothnamesystem.db.dao.DataBaseHelper;
+import com.future.bluetoothnamesystem.db.dao.TestCourseInfoDao;
+import com.future.bluetoothnamesystem.db.dao.TestStudentInfoDao;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
 public class ExportData extends BaseActivity {
 
-    public List<CourseInfo> courseInfoList;
+   private DataBaseHelper mDb = new DataBaseHelper(this);
+    SQLiteDatabase db;
+    Spinner spChooseClass, spChooseCourse, getSpChoosePath;
+    List<String> mClassesList, mCoursesList = new ArrayList<String>();
+    private ArrayAdapter mClassesAdapter, mCourseAdapter;
+
+
+    String selectedClass, selectedCourse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export_data);
+        spChooseClass = (Spinner) findViewById(R.id.sp_choose_class);
+        spChooseCourse = (Spinner) findViewById(R.id.sp_choose_course);
+       // getSpChoosePath = (Spinner) findViewById(R.id.sp_choose_location);
+        db = mDb.getReadableDatabase();
+
         initData();
     }
 
     public void initData() {
-        Spinner classSP = (Spinner) findViewById(R.id.sp_choose_class);
 
-        courseInfoList=new ArrayList<CourseInfo>() ;
-        /*courseInfoList.add(new CourseInfo(false, "计科121"));
-        courseInfoList.add(new CourseInfo(false, "计科122"));
-        courseInfoList.add(new CourseInfo(false, "计科123"));
-        courseInfoList.add(new CourseInfo(false, "计科125"));*/
-        InnerAdapter innerAdapter = new InnerAdapter(ExportData.this,courseInfoList);
-        classSP.setAdapter(innerAdapter);
+        TestStudentInfoDao siDao = new TestStudentInfoDao(ExportData.this);
+        mClassesList = siDao.findClass();
+        TestCourseInfoDao tcDao = new TestCourseInfoDao(ExportData.this);
+        mCoursesList = tcDao.findAllCourseNames();
 
-        classSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /*if (courseInfoList.get(position).isChecked()) {
-                    courseInfoList.get(position).setIsChecked(false);
-                } else {
-                    courseInfoList.get(position).setIsChecked(true);
-
-                }*/
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
+        mClassesAdapter = new ArrayAdapter(ExportData.this,
+                android.R.layout.simple_list_item_single_choice, mClassesList);
+        mCourseAdapter = new ArrayAdapter(ExportData.this,
+                android.R.layout.simple_list_item_single_choice, mCoursesList);
+        spChooseClass.setAdapter(mClassesAdapter);
+        spChooseCourse.setAdapter(mCourseAdapter);
     }
 
-    class InnerAdapter extends MyAdapter<CourseInfo> {
-        /**
-         * 课程实体
-         */
-        private CourseInfo courseInfo;
-        private List<CourseInfo> lists;
+    //确定导出
+    public void ensureExport(View view) {
+        selectedClass = spChooseClass.getSelectedItem().toString();
+        selectedCourse = spChooseCourse.getSelectedItem().toString();
+       // selectedPath = spChooseClass.getSelectedItem().toString();
 
-        public InnerAdapter(Context ctx, List<CourseInfo> list) {
-            super(ctx, list);
-            this.lists = list;
-            System.out.println(lists.size());
-        }
+        WritableWorkbook book = null;
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED);
+        if (sdCardExist) {
 
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            final ViewHolder holder;
-
-            if (convertView == null) {
-                convertView = View.inflate(ExportData.this, R.layout.item_course_selected, null);
-                holder = new ViewHolder();
-                holder.cbClass = (CheckBox) convertView.findViewById(R.id.checkBox);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
+            sdDir = Environment.getExternalStorageDirectory().getAbsoluteFile(); // 优先存在手机存储的目录下
+            Log.e("-------", sdDir + "");
+            if (!sdDir.exists()) {
+                sdDir.mkdirs();
             }
-            if(holder.cbClass==null){
-                System.out.println("================空=================");
+            String fileName = selectedClass + selectedCourse + "点名结果.xls";
+            File childFile = new File(sdDir, fileName);
+            try {
+                Cursor cur = db.query("naming_record",new String[]{ "stu_id, stu_name, arrival, non_arrival, late, break," +
+                        " this_time"}, "class_name = ? and course_name = ?", new String[]{selectedClass, selectedCourse}, null, null, null);
+
+                int numcols = cur.getColumnCount(); // 获取总列数
+                int numrows = cur.getCount(); // 获取总行数
+
+                Toast.makeText(ExportData.this, "行数: "+numrows+"  列数: "+numcols, Toast.LENGTH_LONG).show();
+                String records[][] = new String[numrows+1][numcols]; // 存放从数据表中获取的数据
+                int r = 0;
+
+                if (cur.moveToFirst()) {
+                    while (cur.getPosition() < numrows) {
+                        for (int c = 0; c < numcols; c++) {
+                            if (r == 0) {
+                                records[r][c] = cur.getColumnName(c);
+                                records[r + 1][c] = cur.getString(c);
+                            } else {
+                                records[r + 1][c] = cur.getString(c);
+                            }
+                        }
+                        cur.moveToNext();
+                        r++;
+                    }
+                    cur.close();
+                }
+                // 首先要使用Workbook类的工厂方法创建一个可写入的工作薄(Workbook)对象
+                book = Workbook.createWorkbook(childFile);
+                // 生成名为"sheet1"的工作表，参数0表示这是第一页
+                WritableSheet sheet = book.createSheet("sheet1", 0);
+
+                // 下面开始添加单元格 
+                for (int i = 0; i < numrows+1; i++) {
+                    for (int j = 0; j < numcols; j++) {
+                        // 这里需要注意的是，在Excel中，第一个参数表示列，第二个表示行 
+                        Label labelC = new Label(j, i, records[i][j]);
+                        try {
+                            // 将生成的单元格添加到工作表中
+                            sheet.addCell(labelC);
+                        } catch (RowsExceededException e) {
+                            e.printStackTrace();
+                        } catch (WriteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
-            /*holder.cbClass.setChecked(lists.get(position).isChecked());
-
-            holder.cbClass.setText(lists.get(position).getItemName());*/
-            System.out.println("================" + lists.get(position).toString());
-
-            return convertView;
+            catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if (book != null) {
+                    try {
+                        // 从内存中写入文件中
+                        book.write();
+                        // 关闭资源，释放内存
+                        book.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } else {
+            Toast.makeText(ExportData.this, "没有SD卡！", Toast.LENGTH_SHORT)
+                    .show();
+            // Environment.getExternalStorageDirectory():/storage/sdcard0
+            System.out.println(Environment.getExternalStorageDirectory()
+                    + "0000000000000000000000000000");
         }
-    }
-
-    static class ViewHolder {
-        CheckBox cbClass;
     }
 }
